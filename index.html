@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://lh3.googleusercontent.com">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Manrope:wght@400;700;800&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap">
+<script src="./image-slot.js"></script>
+<link rel="icon" type="image/png" href="assets/logo-taberlo.png">
+<link rel="apple-touch-icon" href="assets/logo-taberlo.png">
+<title>Le Taberlo · Bar à tapas à Salavas, Ardèche</title>
+<meta name="description" content="Bar à tapas à Salavas (Ardèche), près de Vallon-Pont-d'Arc. Tapas, planches, bières artisanales d'Ardèche, terrasse et soirées. Ouvert du mercredi au dimanche dès 16h.">
+<meta property="og:title" content="Le Taberlo · Bar à tapas à Salavas">
+<meta property="og:description" content="Tapas, planches et bières d'Ardèche. Terrasse en journée, soirées dub, karaoké et blind test le soir.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_GB">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BarOrPub","name":"Le Taberlo","description":"Bar à tapas, bières artisanales d'Ardèche et soirées","servesCuisine":"Tapas","telephone":"+33743541882","email":"contact@taberlo.com","priceRange":"€","address":{"@type":"PostalAddress","streetAddress":"185 rue du Ruisseau Saint-Julien","postalCode":"07150","addressLocality":"Salavas","addressRegion":"Ardèche","addressCountry":"FR"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"16:00"}],"sameAs":["https://www.facebook.com/profile.php?id=61572951150910","https://www.instagram.com/taberlo.bar/"]}</script>
+<style>
+@font-face{font-family:'YS Chiffres';src:local('Young Serif Chiffres'),local('YoungSerifChiffres-Regular');}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid #A9442E;outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+body{margin:0;background:#F5EFE3;color:#2B2118;-webkit-font-smoothing:antialiased}
+a{color:#A9442E;text-decoration:none}
+a:hover{color:#2B2118}
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;font-family:Manrope,sans-serif;background:radial-gradient(ellipse 70% 50% at 90% 18%, #EEDCB8 0%, rgba(238,220,184,0) 70%), #F5EFE3;overflow-x:clip">
+<div style="position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.08;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;)"></div>
+
+<sc-if value="{{ hasBanner }}" hint-placeholder-val="{{ false }}">
+<div style="position:relative;z-index:41;background:#A9442E;color:#F5EFE3">
+<div style="max-width:1240px;margin:0 auto;padding:10px clamp(20px,5vw,72px);display:flex;align-items:center;gap:16px">
+<span style="flex:1;min-width:0;display:flex;flex-wrap:wrap;column-gap:14px;row-gap:2px;align-items:baseline;justify-content:center;text-align:center">
+<sc-for list="{{ banners }}" as="b" hint-placeholder-count="0"><span style="font:800 12px/1.5 Manrope,sans-serif;letter-spacing:.12em">{{ b.title }}<sc-if value="{{ b.hasText }}" hint-placeholder-val="{{ false }}"> <span style="font:italic 400 15px Fraunces,serif;letter-spacing:0">{{ b.text }}</span></sc-if></span></sc-for>
+</span>
+<button onClick="{{ closeBanner }}" aria-label="Fermer" style="flex:none;width:28px;height:28px;border-radius:50%;border:1px solid rgba(245,239,227,.4);background:transparent;color:#F5EFE3;cursor:pointer;font:400 16px/1 Manrope,sans-serif">×</button>
+</div>
+</div>
+</sc-if>
+<a href="#carte" style="position:absolute;left:12px;top:-60px;z-index:100;background:#2B2118;color:#F5EFE3;padding:12px 18px;border-radius:999px;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-focus="top:12px">{{ skipLabel }}</a>
+<header style="position:sticky;top:0;z-index:40;background:rgba(245,239,227,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(43,33,24,.08)">
+<div style="max-width:1240px;margin:0 auto;padding:14px clamp(20px,5vw,72px);display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+<a href="#accueil" style="display:flex;align-items:center;gap:12px;color:#2B2118">
+<img src="assets/logo-taberlo.png" alt="Le Taberlo" style="height:50px;width:auto;display:block;filter:drop-shadow(0 0 .6px #2B2118) drop-shadow(0 0 .6px #2B2118)">
+<span style="font:800 13px Manrope,sans-serif;letter-spacing:.14em">TABERLO</span>
+</a>
+<sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}"><nav style="display:flex;gap:clamp(14px,2.4vw,30px);flex-wrap:wrap;margin-left:auto;font:700 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase">
+<a href="#carte" style="color:{{ navCarte.c }};padding-bottom:4px;border-bottom:2px solid {{ navCarte.b }};transition:color .2s, border-color .2s" style-hover="color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">La carte</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Menu</sc-if></a>
+<a href="#agenda" style="color:{{ navAgenda.c }};padding-bottom:4px;border-bottom:2px solid {{ navAgenda.b }};transition:color .2s, border-color .2s" style-hover="color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Actus</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">News</sc-if></a>
+<a href="#horaires" style="color:{{ navHoraires.c }};padding-bottom:4px;border-bottom:2px solid {{ navHoraires.b }};transition:color .2s, border-color .2s" style-hover="color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Horaires &amp; accès</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Hours &amp; location</sc-if></a>
+<a href="#photos" style="color:{{ navPhotos.c }};padding-bottom:4px;border-bottom:2px solid {{ navPhotos.b }};transition:color .2s, border-color .2s" style-hover="color:#A9442E">Photos</a>
+</nav></sc-if>
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto"></span></sc-if>
+<div style="display:flex;border:1px solid rgba(43,33,24,.25);border-radius:999px;padding:3px;gap:2px">
+<button onClick="{{ setFr }}" aria-pressed="{{ fr }}" aria-label="Français" style="border:0;cursor:pointer;border-radius:999px;padding:6px 11px;font:800 11px Manrope,sans-serif;letter-spacing:.12em;background:{{ frBg }};color:{{ frColor }}">FR</button>
+<button onClick="{{ setEn }}" aria-pressed="{{ en }}" aria-label="English" style="border:0;cursor:pointer;border-radius:999px;padding:6px 11px;font:800 11px Manrope,sans-serif;letter-spacing:.12em;background:{{ enBg }};color:{{ enColor }}">EN</button>
+</div>
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(43,33,24,.25);background:{{ burgerBg }};color:{{ burgerColor }};cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0">
+<span style="display:block;width:18px;height:1.5px;background:currentColor"></span><span style="display:block;width:18px;height:1.5px;background:currentColor"></span>
+</button>
+</sc-if>
+</div>
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+<nav style="display:flex;flex-direction:column;padding:8px clamp(20px,5vw,72px) 24px;border-top:1px solid rgba(43,33,24,.08)">
+<a href="#carte" onClick="{{ closeMenu }}" style="padding:16px 0;border-bottom:1px solid rgba(43,33,24,.1);font:400 28px 'Young Serif',serif;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">La carte</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Menu</sc-if></a>
+<a href="#agenda" onClick="{{ closeMenu }}" style="padding:16px 0;border-bottom:1px solid rgba(43,33,24,.1);font:400 28px 'Young Serif',serif;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Actus</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">News</sc-if></a>
+<a href="#horaires" onClick="{{ closeMenu }}" style="padding:16px 0;border-bottom:1px solid rgba(43,33,24,.1);font:400 28px 'Young Serif',serif;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Horaires &amp; accès</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Hours &amp; location</sc-if></a>
+<a href="#photos" onClick="{{ closeMenu }}" style="padding:16px 0;border-bottom:1px solid rgba(43,33,24,.1);font:400 28px 'Young Serif',serif;color:#2B2118">Photos</a>
+</nav>
+</sc-if>
+</header>
+
+<section id="accueil" data-screen-label="Accueil" style="max-width:1240px;margin:0 auto;padding:clamp(48px,8vw,104px) clamp(20px,5vw,72px) clamp(56px,8vw,96px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,80px);align-items:center">
+<div style="display:flex;flex-direction:column;gap:28px">
+<div style="font:800 13px Manrope,sans-serif;letter-spacing:.14em;color:#2B2118">LE TABERLO <span style="font:italic 400 18px Fraunces,serif;letter-spacing:0;color:#A9442E;text-transform:none"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">présente</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">presents</sc-if></span></div>
+<h1 style="margin:0;font:400 clamp(56px,9vw,124px)/.92 'Young Serif',serif;letter-spacing:-.02em;color:#2B2118;text-wrap:balance">
+<sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Bar à tapas <span style="display:block;font:italic 400 .62em/1.15 Fraunces,serif;letter-spacing:-.01em;color:#A9442E;margin-top:.12em">un peu taberlo</span></sc-if>
+<sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Tapas bar <span style="display:block;font:italic 400 .62em/1.15 Fraunces,serif;letter-spacing:-.01em;color:#A9442E;margin-top:.12em">a little bit crazy</span></sc-if>
+</h1>
+<p style="margin:0;max-width:30em;font:400 clamp(17px,1.5vw,19px)/1.6 Manrope,sans-serif;color:#2B2118;text-wrap:pretty">
+<sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Tapas, planches et bières d'Ardèche dans une vieille maison de Salavas. Terrasse l'après-midi, musique le soir.</sc-if>
+<sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Tapas, sharing boards and Ardèche craft beer in an old Salavas house. Terrace by day, music at night.</sc-if>
+</p>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px">
+<sc-if value="{{ showStatus }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:12px;font:800 13px Manrope,sans-serif;letter-spacing:.12em;color:#2B2118">
+<span style="width:10px;height:10px;border-radius:50%;background:{{ statusDot }}"></span>{{ statusText }}
+</div>
+</sc-if>
+<a href="https://share.google/v5ykhntguPvob8m0D" target="_blank" style="display:flex;align-items:center;gap:12px;color:#2B2118" style-hover="color:#A9442E">
+<span style="font:400 18px/1 'Young Serif',serif;letter-spacing:.08em;color:#A9442E">★★★★★</span>
+<span style="font:400 22px/1 'YS Chiffres','Young Serif',serif;font-variant-numeric:lining-nums">{{ gNote }}</span>
+<sc-if value="{{ hasNbAvis }}" hint-placeholder-val="{{ false }}"><span style="font:400 13px Manrope,sans-serif;color:#6B5E50">{{ gNbAvis }}</span></sc-if>
+<span style="font:800 11px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Avis Google</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Google reviews</sc-if></span>
+</a>
+</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap">
+<a href="#carte" style="background:#2B2118;color:#F5EFE3;padding:16px 26px;border-radius:999px;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#A9442E;color:#F5EFE3"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Voir la carte</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">See the menu</sc-if></a>
+<a href="#agenda" style="border:1.5px solid #2B2118;color:#2B2118;padding:15px 26px;border-radius:999px;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-hover="border-color:#A9442E;color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Les actus</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">News</sc-if></a>
+</div>
+</div>
+<div style="position:relative;justify-self:center;width:min(100%,560px);aspect-ratio:4/5">
+<sc-if value="{{ hasPhotos }}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{ heroSlides }}" as="s" hint-placeholder-count="0">
+<div style="position:absolute;top:6%;left:10%;width:80%;height:82%;padding:10px 10px 10px;background:#FBF8F2;border-radius:6px;box-shadow:0 24px 50px -20px rgba(43,33,24,.45), 0 2px 6px rgba(43,33,24,.12);box-sizing:border-box;z-index:{{ s.z }};opacity:{{ s.op }};transform:{{ s.tf }};transition:transform .9s cubic-bezier(.2,.7,.2,1), opacity .9s ease">
+<img src="{{ s.src }}" loading="lazy" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:3px">
+</div>
+</sc-for>
+</sc-if>
+<sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;top:6%;left:10%;width:80%;height:82%;padding:10px 10px 10px;background:#FBF8F2;border-radius:6px;box-shadow:0 24px 50px -20px rgba(43,33,24,.45), 0 2px 6px rgba(43,33,24,.12);box-sizing:border-box;transform:translate(-7%,3%) rotate(-7deg)"><image-slot id="hero-print-3" shape="rect" placeholder="Photo 3"></image-slot></div>
+<div style="position:absolute;top:6%;left:10%;width:80%;height:82%;padding:10px 10px 10px;background:#FBF8F2;border-radius:6px;box-shadow:0 24px 50px -20px rgba(43,33,24,.45), 0 2px 6px rgba(43,33,24,.12);box-sizing:border-box;transform:translate(6%,-3%) rotate(5deg)"><image-slot id="hero-print-2" shape="rect" placeholder="Photo 2"></image-slot></div>
+<div style="position:absolute;top:6%;left:10%;width:80%;height:82%;padding:10px 10px 10px;background:#FBF8F2;border-radius:6px;box-shadow:0 24px 50px -20px rgba(43,33,24,.45), 0 2px 6px rgba(43,33,24,.12);box-sizing:border-box;transform:rotate(-2deg)"><image-slot id="hero-arche" shape="rect" placeholder="Photo : terrasse ou tapas (les photos du dossier Drive défileront ici)"></image-slot></div>
+</sc-if>
+<div style="position:absolute;z-index:5;left:0;bottom:6%;background:#F5EFE3;border:1.5px solid #C4A25E;border-radius:999px;padding:10px 20px;font:italic 400 19px Fraunces,serif;color:#A9442E">
+<sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Salavas, Ardèche</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Salavas, Ardèche</sc-if>
+</div>
+</div>
+</section>
+
+<section data-screen-label="Le lieu" style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(72px,10vw,128px)">
+<div style="border-top:1px solid rgba(43,33,24,.15);padding-top:clamp(40px,6vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(28px,5vw,72px)">
+<h2 style="margin:0;font:400 clamp(34px,4.4vw,56px)/1.05 'Young Serif',serif;letter-spacing:-.015em;color:#2B2118;text-wrap:balance">
+<sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Taberlo, ça veut dire <span style="font:italic 400 1em Fraunces,serif;color:#A9442E">fada</span> en patois ardéchois.</sc-if>
+<sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">In the local dialect, taberlo means <span style="font:italic 400 1em Fraunces,serif;color:#A9442E">a bit mad</span>.</sc-if>
+</h2>
+<div style="display:flex;flex-direction:column;gap:18px;font:400 17px/1.7 Manrope,sans-serif;color:#2B2118;text-wrap:pretty">
+<sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}"><p style="margin:0">En journée, on vient en famille pour les tapas et les planches, en terrasse ou entre les murs de pierre. Les bières viennent des brasseries du coin.</p><p style="margin:0">Le soir, place aux soirées dub et électro, au karaoké et au blind test. Venez comme vous êtes.</p></sc-if>
+<sc-if value="{{ en }}" hint-placeholder-val="{{ false }}"><p style="margin:0">By day, families come for tapas and sharing boards, on the terrace or between the old stone walls. Our beers come from local Ardèche breweries.</p><p style="margin:0">At night it's dub and electro sessions, karaoke and music quizzes. Come as you are.</p></sc-if>
+</div>
+</div>
+</section>
+
+<section id="carte" data-screen-label="La carte" style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(72px,10vw,128px);scroll-margin-top:90px">
+<div style="display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(36px,5vw,56px)">
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#6B5E50;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">À partager</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">To share</sc-if></div>
+<h2 style="margin:0;font:400 clamp(44px,6vw,80px)/1 'Young Serif',serif;letter-spacing:-.015em;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">La carte</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">The menu</sc-if></h2>
+<div style="width:48px;height:3px;background:#C8624A;margin-top:6px"></div>
+</div>
+<div role="tablist" style="display:flex;gap:clamp(28px,4vw,48px);border-bottom:1px solid rgba(43,33,24,.15);margin-bottom:clamp(32px,4vw,48px)">
+<button role="tab" aria-selected="{{ tabTapas }}" onClick="{{ showTapas }}" style="background:none;border:0;padding:0 0 14px;margin-bottom:-1px;cursor:pointer;font:400 clamp(28px,3.4vw,40px)/1 'Young Serif',serif;letter-spacing:-.01em;color:{{ tapasColor }};border-bottom:3px solid {{ tapasLine }}" style-hover="color:#2B2118">Tapas</button>
+<button role="tab" aria-selected="{{ tabBoissons }}" onClick="{{ showBoissons }}" style="background:none;border:0;padding:0 0 14px;margin-bottom:-1px;cursor:pointer;font:400 clamp(28px,3.4vw,40px)/1 'Young Serif',serif;letter-spacing:-.01em;color:{{ boissonsColor }};border-bottom:3px solid {{ boissonsLine }}" style-hover="color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Boissons</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Drinks</sc-if></button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(32px,4vw,56px);opacity:{{ menuOp }};transform:translateY({{ menuY }});transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)">
+<sc-for list="{{ menuTab }}" as="cat" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:4px">
+<h3 style="margin:0 0 14px;font:italic 400 30px Fraunces,serif;color:#A9442E">{{ cat.title }}</h3>
+<sc-for list="{{ cat.items }}" as="it" hint-placeholder-count="4">
+<div style="display:flex;align-items:baseline;gap:12px;padding:14px 0;border-bottom:1px solid rgba(43,33,24,.12)">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+<span style="font:400 20px/1.25 'Young Serif',serif;color:#2B2118">{{ it.name }}</span>
+<sc-if value="{{ it.desc }}" hint-placeholder-val="{{ true }}"><span style="font:400 14px/1.45 Manrope,sans-serif;color:#6B5E50">{{ it.desc }}</span></sc-if>
+</div>
+<span style="font:400 20px 'YS Chiffres','Young Serif',serif;font-variant-numeric:lining-nums;color:#A9442E;white-space:nowrap">{{ it.price }}</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ menuFail }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font:italic 400 24px Fraunces,serif;color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">La carte est disponible au comptoir.</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Ask for the menu at the bar.</sc-if></p></sc-if>
+<sc-if value="{{ menuEmptyTab }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font:italic 400 24px Fraunces,serif;color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Bientôt à la carte.</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Coming soon.</sc-if></p></sc-if>
+</section>
+
+<section id="agenda" data-screen-label="Agenda" onMouseMove="{{ onMove }}" style="position:relative;color:#2B2118;scroll-margin-top:70px">
+<div style="max-width:1240px;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(20px,5vw,72px)">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(24px,5vw,72px);align-items:end">
+<div>
+<div style="font:800 14px Manrope,sans-serif;letter-spacing:.14em;color:#2B2118">LE TABERLO <span style="font:italic 400 18px Fraunces,serif;letter-spacing:0;color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">vous tient au courant</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">keeps you posted</sc-if></span></div>
+<div style="font:400 clamp(64px,9vw,120px)/1 'Young Serif',serif;letter-spacing:-.02em;color:#A9442E;margin-top:14px"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Quoi de neuf</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">What’s new</sc-if></div>
+<div style="font:italic 400 clamp(22px,2.4vw,30px) Fraunces,serif;color:#2B2118;margin-top:10px"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Soirées, nouveautés &amp; annonces</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Events, news &amp; updates</sc-if></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:22px;padding-bottom:6px">
+<div style="width:48px;height:3px;background:#C8624A"></div>
+<p style="margin:0;max-width:30em;font:400 17px/1.65 Manrope,sans-serif;color:#2B2118;text-wrap:pretty"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Les prochaines soirées et les nouveautés de la maison.</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Upcoming nights and what’s new at the bar.</sc-if><sc-if value="{{ showHoverHint }}" hint-placeholder-val="{{ false }}"> <sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Passez sur une ligne pour voir l’affiche.</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Hover a line to see the poster.</sc-if></sc-if><sc-if value="{{ showTapHint }}" hint-placeholder-val="{{ false }}"> <sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Touchez une vignette pour voir l’affiche.</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Tap a thumbnail to see the poster.</sc-if></sc-if></p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,5vw,72px);align-items:start;margin-top:clamp(40px,5vw,64px);opacity:{{ actuOp }};transform:translateY({{ actuY }});transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)">
+<sc-if value="{{ hasEvents }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#6B5E50;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Prochaines soirées</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Coming up</sc-if></div>
+<div style="display:flex;flex-direction:column;margin-top:14px;border-bottom:1px solid rgba(43,33,24,.15)">
+<sc-for list="{{ upcoming }}" as="ev" hint-placeholder-count="3">
+<div onMouseEnter="{{ ev.enter }}" onMouseLeave="{{ leaveItem }}" onClick="{{ ev.tap }}" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:clamp(18px,3vw,28px);padding:18px 16px;margin:0 -16px;border-top:1px solid rgba(43,33,24,.15);border-radius:10px;cursor:{{ ev.cursor }};background:{{ ev.bg }};transition:background .3s ease">
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font:800 12px Manrope,sans-serif;letter-spacing:.14em;color:#6B5E50;text-transform:uppercase">{{ ev.day }} · <span style="color:#A9442E;text-transform:none">{{ ev.time }}</span></span>
+<span style="font:400 clamp(40px,4.6vw,56px)/1 'YS Chiffres','Young Serif',serif;font-variant-numeric:lining-nums;letter-spacing:-.02em;color:#2B2118">{{ ev.date }}</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font:400 clamp(24px,2.6vw,32px)/1.1 'Young Serif',serif;letter-spacing:-.01em;color:#A9442E;text-wrap:balance">{{ ev.name }}</span>
+<sc-if value="{{ ev.hasInfo }}" hint-placeholder-val="{{ false }}"><span style="font:400 14px/1.4 Manrope,sans-serif;color:#6B5E50">{{ ev.info }}</span></sc-if>
+</div>
+<sc-if value="{{ ev.showThumb }}" hint-placeholder-val="{{ false }}"><img src="{{ ev.src }}" loading="lazy" alt="" style="width:52px;height:65px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px -6px rgba(43,33,24,.5);transform:rotate(3deg)"></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ hasNews }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#6B5E50;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">À savoir</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Good to know</sc-if></div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<sc-for list="{{ news }}" as="n" hint-placeholder-count="0">
+<div onMouseEnter="{{ n.enter }}" onMouseLeave="{{ leaveItem }}" onClick="{{ n.tap }}" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:14px;background:{{ n.bg }};border:1px solid rgba(43,33,24,.12);cursor:{{ n.cursor }};transition:background .3s ease">
+<span style="flex:none;align-self:flex-start;margin-top:3px;padding:6px 10px;border-radius:999px;background:{{ n.tagBg }};color:#F5EFE3;font:800 10px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase">{{ n.tag }}</span>
+<div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font:400 clamp(20px,2.2vw,24px)/1.2 'Young Serif',serif;color:#2B2118;text-wrap:balance">{{ n.title }}</span>
+<sc-if value="{{ n.hasText }}" hint-placeholder-val="{{ false }}"><span style="font:400 15px/1.5 Manrope,sans-serif;color:#6B5E50;text-wrap:pretty">{{ n.text }}</span></sc-if>
+</div>
+<sc-if value="{{ n.showThumb }}" hint-placeholder-val="{{ false }}"><img src="{{ n.src }}" loading="lazy" alt="" style="width:52px;height:65px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px -6px rgba(43,33,24,.5);transform:rotate(3deg)"></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{ noEvents }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;max-width:640px;border-bottom:1px solid rgba(43,33,24,.15)">
+<div style="display:flex;flex-direction:column;gap:6px;padding:22px 0;border-top:1px solid rgba(43,33,24,.15)">
+<span style="font:400 clamp(34px,4vw,48px)/1.1 'Young Serif',serif;letter-spacing:-.01em;color:#A9442E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Les soirées</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Nights out</sc-if></span>
+<span style="font:400 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6B5E50"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Dub · Électro · Karaoké · Blind test · Concerts</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Dub · Electro · Karaoke · Music quiz · Live music</sc-if></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:16px 0;border-top:1px solid rgba(43,33,24,.15)">
+<span style="font:400 clamp(22px,2.4vw,28px)/1.1 'Young Serif',serif;letter-spacing:-.01em;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Les nouveaux plats</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">New on the menu</sc-if></span>
+<span style="font:400 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6B5E50"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Tapas, planches, plat du jour</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Tapas, boards, dish of the day</sc-if></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:16px 0;border-top:1px solid rgba(43,33,24,.15)">
+<span style="font:400 clamp(22px,2.4vw,28px)/1.1 'Young Serif',serif;letter-spacing:-.01em;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Horaires &amp; infos</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Hours &amp; info</sc-if></span>
+<span style="font:400 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6B5E50"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Ouvertures, fermetures, événements privés</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Openings, closures, private events</sc-if></span>
+</div>
+</div>
+</sc-if>
+<div style="display:flex;align-items:center;gap:12px;margin-top:clamp(32px,4vw,48px);flex-wrap:wrap">
+<a href="https://www.facebook.com/profile.php?id=61572951150910" target="_blank" style="border:1.5px solid #2B2118;color:#2B2118;padding:15px 26px;border-radius:999px;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#2B2118;color:#F5EFE3"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Suivre sur Facebook</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Follow on Facebook</sc-if></a>
+<a href="https://www.instagram.com/taberlo.bar/" target="_blank" style="border:1.5px solid #2B2118;color:#2B2118;padding:15px 26px;border-radius:999px;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#2B2118;color:#F5EFE3"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Suivre sur Instagram</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Follow on Instagram</sc-if></a>
+</div>
+</div>
+<div ref="{{ floatRef }}" style="position:fixed;left:0;top:0;z-index:60;width:280px;pointer-events:none;will-change:transform">
+<div style="position:relative;aspect-ratio:4/5;padding:8px;background:#FBF8F2;border-radius:10px;box-shadow:0 30px 60px -20px rgba(43,33,24,.55), 0 2px 8px rgba(43,33,24,.15);box-sizing:border-box;opacity:{{ floatOp }};transform:rotate(-3deg) scale({{ floatScale }});transition:opacity .25s ease, transform .35s cubic-bezier(.2,.7,.2,1)">
+<div style="position:relative;width:100%;height:100%;border-radius:5px;overflow:hidden;background:#E2D3B8">
+<sc-for list="{{ visuals }}" as="v" hint-placeholder-count="0"><img src="{{ v.src }}" loading="lazy" alt="{{ v.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ v.op }};transition:opacity .3s ease"></sc-for>
+</div>
+</div>
+</div>
+<sc-if value="{{ hasLightbox }}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:70;background:rgba(30,23,20,.82);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px">
+<img src="{{ lightboxSrc }}" loading="lazy" alt="{{ lightboxAlt }}" style="max-width:100%;max-height:82vh;border-radius:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)">
+<button onClick="{{ closeLightbox }}" aria-label="Fermer" style="position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:0;background:#F5EFE3;color:#2B2118;font:400 22px/1 Manrope,sans-serif;cursor:pointer">×</button>
+</div>
+</sc-if>
+</section>
+
+<section id="horaires" data-screen-label="Horaires &amp; accès" style="max-width:1240px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,5vw,72px);scroll-margin-top:70px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(40px,6vw,88px);align-items:stretch">
+<div style="display:flex;flex-direction:column">
+<h2 style="margin:0;font:400 clamp(44px,6vw,80px)/1 'Young Serif',serif;letter-spacing:-.015em;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Venir au Taberlo</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Visit us</sc-if></h2>
+<div style="width:48px;height:3px;background:#C8624A;margin-top:20px"></div>
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#6B5E50;text-transform:uppercase;margin-top:clamp(36px,4vw,48px)"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Horaires</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Opening hours</sc-if></div>
+<div style="display:flex;flex-direction:column;margin-top:14px;border-bottom:1px solid rgba(43,33,24,.15)">
+<sc-for list="{{ openGroups }}" as="g" hint-placeholder-count="1">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 0;border-top:1px solid rgba(43,33,24,.15)">
+<div style="font:800 clamp(15px,1.4vw,17px)/1.3 Manrope,sans-serif;letter-spacing:.1em;color:#2B2118;text-transform:uppercase">
+<sc-if value="{{ g.isRange }}" hint-placeholder-val="{{ true }}"><span style="font:italic 400 1.05em Fraunces,serif;letter-spacing:0;text-transform:none;color:#A9442E">{{ g.pre }}</span> {{ g.a }} <span style="font:italic 400 1.05em Fraunces,serif;letter-spacing:0;text-transform:none;color:#A9442E">{{ g.mid }}</span> {{ g.b }}</sc-if>
+<sc-if value="{{ g.isSingle }}" hint-placeholder-val="{{ false }}">{{ g.a }}</sc-if>
+</div>
+<div style="font:400 clamp(36px,4vw,52px)/1 'YS Chiffres','Young Serif',serif;font-variant-numeric:lining-nums;letter-spacing:-.02em;color:#2B2118;white-space:nowrap">
+<sc-if value="{{ g.hasPrefix }}" hint-placeholder-val="{{ true }}"><span style="font:italic 400 .45em Fraunces,serif;letter-spacing:0;color:#A9442E;margin-right:.25em">{{ g.prefix }}</span></sc-if>{{ g.time }}
+</div>
+</div>
+</sc-for>
+<sc-if value="{{ hasClosed }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 0;border-top:1px solid rgba(43,33,24,.15)">
+<div style="font:800 clamp(15px,1.4vw,17px)/1.3 Manrope,sans-serif;letter-spacing:.1em;color:#2B2118;text-transform:uppercase"><sc-for list="{{ closedParts }}" as="p" hint-placeholder-count="2"><span style="font:italic 400 1.05em Fraunces,serif;letter-spacing:0;text-transform:none;color:#A9442E">{{ p.sep }}</span>{{ p.day }}</sc-for></div>
+<div style="font:400 clamp(28px,3vw,38px)/1 'Young Serif',serif;color:#A9442E">{{ closedWord }}</div>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}"><p style="margin:16px 0 0;font:italic 400 19px Fraunces,serif;color:#A9442E">{{ note }}</p></sc-if>
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#6B5E50;text-transform:uppercase;margin-top:clamp(36px,4vw,48px)"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Adresse</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Address</sc-if></div>
+<address style="margin-top:14px;font:normal 400 clamp(22px,2.2vw,28px)/1.35 'Young Serif',serif;color:#2B2118">185 rue du Ruisseau Saint-Julien<br>07150 Salavas</address>
+<p style="margin:10px 0 0;max-width:26em;font:400 16px/1.65 Manrope,sans-serif;color:#6B5E50;text-wrap:pretty"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">À deux pas de Vallon-Pont-d'Arc et des gorges de l'Ardèche.</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">A few minutes from Vallon-Pont-d'Arc and the Ardèche gorges.</sc-if></p>
+<a href="https://www.google.com/maps/dir/?api=1&amp;destination=185+rue+du+Ruisseau+Saint-Julien+07150+Salavas" target="_blank" style="margin-top:28px;align-self:flex-start;background:#2B2118;color:#F5EFE3;padding:16px 26px;border-radius:999px;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#A9442E;color:#F5EFE3"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Itinéraire</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Directions</sc-if></a>
+</div>
+<div id="acces" style="position:relative;min-height:440px;border-radius:28px;overflow:hidden;background:#E2D3B8;border:1px solid rgba(43,33,24,.12);box-shadow:0 30px 60px -30px rgba(43,33,24,.35);scroll-margin-top:90px">
+<sc-if value="{{ mapLive }}" hint-placeholder-val="{{ false }}"><iframe title="Plan" src="https://maps.google.com/maps?q=185%20rue%20du%20Ruisseau%20Saint-Julien%2007150%20Salavas&amp;z=15&amp;output=embed" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(.35) sepia(.18) contrast(.95)"></iframe></sc-if>
+<sc-if value="{{ mapStatic }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ loadMap }}" aria-label="Afficher le plan interactif" style="position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:#E2D3B8;overflow:hidden">
+<img src="assets/plan-salavas.png" alt="Plan d'accès au Taberlo, Salavas" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:43% 51%;filter:sepia(.18) saturate(.9)">
+<span style="position:absolute;left:16px;bottom:16px;padding:10px 16px;border-radius:999px;background:rgba(251,248,242,.94);font:800 11px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#2B2118;white-space:nowrap;box-shadow:0 6px 18px -8px rgba(43,33,24,.4)">{{ mapCta }}</span>
+</button>
+</sc-if>
+<div style="position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(251,248,242,.92);backdrop-filter:blur(10px);box-shadow:0 6px 20px -8px rgba(43,33,24,.35);font:800 12px Manrope,sans-serif;letter-spacing:.14em;color:#2B2118;pointer-events:none">
+<span style="width:8px;height:8px;border-radius:50%;background:#C8624A"></span>TABERLO · SALAVAS
+</div>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=185+rue+du+Ruisseau+Saint-Julien+07150+Salavas" target="_blank" style="position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;background:#2B2118;color:#F5EFE3;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 24px -10px rgba(43,33,24,.6)" style-hover="background:#A9442E;color:#F5EFE3"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Ouvrir dans Maps</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Open in Maps</sc-if> ↗</a>
+</div>
+</div>
+</section>
+
+<section id="photos" data-screen-label="Photos" style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(72px,10vw,128px);scroll-margin-top:90px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,44px)">
+<h2 style="margin:0;font:400 clamp(44px,6vw,80px)/1 'Young Serif',serif;letter-spacing:-.015em;color:#2B2118"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">En images</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">In pictures</sc-if></h2>
+<a href="https://www.instagram.com/taberlo.bar/" target="_blank" style="font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase">Instagram →</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:16px">
+<sc-if value="{{ hasPhotos }}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{ photos }}" as="p" hint-placeholder-count="0">
+<a href="{{ p.full }}" target="_blank" style="display:block;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:#E2D3B8">
+<img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease" style-hover="transform:scale(1.04)">
+</a>
+</sc-for>
+</sc-if>
+<sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ true }}">
+<div style="aspect-ratio:4/5"><image-slot id="photo-1" radius="6" placeholder="Photo : façade / terrasse"></image-slot></div>
+<div style="aspect-ratio:4/5"><image-slot id="photo-2" radius="6" placeholder="Photo : planche de tapas"></image-slot></div>
+<div style="aspect-ratio:4/5"><image-slot id="photo-3" radius="6" placeholder="Photo : bières d'Ardèche au comptoir"></image-slot></div>
+<div style="aspect-ratio:4/5"><image-slot id="photo-4" radius="6" placeholder="Photo : salle, murs de pierre"></image-slot></div>
+<div style="aspect-ratio:4/5"><image-slot id="photo-5" radius="6" placeholder="Photo : soirée, du monde content"></image-slot></div>
+<div style="aspect-ratio:4/5"><image-slot id="photo-6" radius="6" placeholder="Photo : détail, verre au blason"></image-slot></div>
+</sc-if>
+</div>
+</section>
+
+<footer id="contact" data-screen-label="Contact" style="background:#2B2118;color:#F5EFE3;scroll-margin-top:70px">
+<div style="max-width:1240px;margin:0 auto;padding:clamp(64px,8vw,104px) clamp(20px,5vw,72px) 40px;display:flex;flex-direction:column;gap:clamp(48px,6vw,72px)">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:40px">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#B9B2A6;text-transform:uppercase">Contact</div>
+<a href="mailto:contact@taberlo.com" style="font:400 24px 'Young Serif',serif;color:#F5EFE3" style-hover="color:#C4A25E">contact@taberlo.com</a>
+<a href="{{ telHref }}" style="font:400 24px 'YS Chiffres','Young Serif',serif;font-variant-numeric:lining-nums;color:#F5EFE3" style-hover="color:#C4A25E">{{ telLabel }}</a>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#B9B2A6;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Nous suivre</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Follow us</sc-if></div>
+<a href="https://www.instagram.com/taberlo.bar/" target="_blank" style="font:800 14px Manrope,sans-serif;letter-spacing:.12em;color:#F5EFE3;text-transform:uppercase" style-hover="color:#C4A25E">Instagram</a>
+<a href="https://www.facebook.com/profile.php?id=61572951150910" target="_blank" style="font:800 14px Manrope,sans-serif;letter-spacing:.12em;color:#F5EFE3;text-transform:uppercase" style-hover="color:#C4A25E">Facebook</a>
+<a href="https://share.google/v5ykhntguPvob8m0D" target="_blank" style="font:800 14px Manrope,sans-serif;letter-spacing:.12em;color:#F5EFE3;text-transform:uppercase" style-hover="color:#C4A25E"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Avis Google</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Google reviews</sc-if> <span style="color:#C4A25E">★ {{ gNote }}</span></a>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#B9B2A6;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Horaires</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Hours</sc-if></div>
+<div style="display:flex;flex-direction:column;font:800 14px/1.7 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase">
+<sc-for list="{{ footerHours }}" as="l" hint-placeholder-count="2"><span style="color:{{ l.color }}">{{ l.days }} <span style="text-transform:none">{{ l.time }}</span></span></sc-for>
+</div>
+</div>
+</div>
+<div style="display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;border-top:1px solid rgba(245,239,227,.15);padding-top:36px">
+<img src="assets/logo-taberlo.png" alt="Le Taberlo" style="height:140px;width:auto;display:block">
+<div style="display:flex;flex-direction:column;gap:6px;padding-bottom:6px">
+<span style="font:800 15px Manrope,sans-serif;letter-spacing:.14em">SALAVAS / ARDÈCHE</span>
+<span style="font:400 13px Manrope,sans-serif;letter-spacing:.14em;color:#B9B2A6">TAPAS · CRAFT BEER · LIVE NIGHTS</span>
+</div>
+<span style="margin-left:auto;font:400 12px Manrope,sans-serif;letter-spacing:.12em;color:#B9B2A6;padding-bottom:6px">© 2026 SARL TABERLO</span>
+</div>
+</div>
+</footer>
+<a href="#accueil" aria-label="Retour en haut" style="position:fixed;right:{{ topRight }};bottom:{{ topBottom }};z-index:44;width:48px;height:48px;border-radius:50%;background:#2B2118;color:#F5EFE3;display:flex;align-items:center;justify-content:center;font:400 20px/1 'Young Serif',serif;box-shadow:0 10px 24px -10px rgba(43,33,24,.6);opacity:{{ topOp }};pointer-events:{{ topPe }};transform:translateY({{ topY }});transition:opacity .3s ease, transform .3s ease" style-hover="background:#A9442E;color:#F5EFE3">↑</a>
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+<div style="height:84px;background:#2B2118"></div>
+<div style="position:fixed;left:12px;right:12px;bottom:12px;z-index:45;display:flex;gap:8px;padding:8px;border-radius:999px;transform:translateY({{ barY }});transition:transform .35s cubic-bezier(.2,.7,.2,1);background:rgba(43,33,24,.94);backdrop-filter:blur(10px);box-shadow:0 12px 30px -10px rgba(43,33,24,.5)">
+<sc-if value="{{ hasTel }}" hint-placeholder-val="{{ false }}"><a href="{{ telHref }}" style="flex:1;display:flex;align-items:center;justify-content:center;height:48px;border-radius:999px;background:#F5EFE3;color:#2B2118;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Appeler</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Call</sc-if></a></sc-if>
+<a href="#carte" style="flex:1;display:flex;align-items:center;justify-content:center;height:48px;border-radius:999px;border:1px solid rgba(245,239,227,.3);color:#F5EFE3;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">La carte</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Menu</sc-if></a>
+<a href="https://www.google.com/maps/dir/?api=1&amp;destination=185+rue+du+Ruisseau+Saint-Julien+07150+Salavas" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;height:48px;border-radius:999px;background:#A9442E;color:#F5EFE3;font:800 12px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Itinéraire</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">Directions</sc-if></a>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;langue&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fr&quot;,&quot;en&quot;],&quot;default&quot;:&quot;fr&quot;,&quot;tsType&quot;:&quot;'fr'|'en'&quot;},&quot;badgeOuvert&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;telephone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;07 43 54 18 82&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;heroNb&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:2,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;nbSoirees&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;min&quot;:1,&quot;max&quot;:8,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Actus&quot;},&quot;carteCsvUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1FCrxJmjcq-tj54sQdkdpfosJl3rjJK85ya4Nks0zOG8/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Carte (Google Sheet)&quot;},&quot;githubRepo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Taberlo07150/taberlo-site&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Photos (GitHub / Netlify)&quot;},&quot;githubBranch&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;main&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Photos (GitHub / Netlify)&quot;},&quot;netlifyImages&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Photos (GitHub / Netlify)&quot;},&quot;galerieScriptUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://script.google.com/macros/s/AKfycbzIo_jWvyoLNt-c1DN3iQ-OGszu63_5SJ6TLcxhteUcFtCu7bbkYB4L63WIDrDiPAIw/exec&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Galerie (dossier Drive, secours)&quot;},&quot;galerieMax&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:12,&quot;min&quot;:3,&quot;max&quot;:30,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Galerie (dossier Drive, secours)&quot;}}">
+class Component extends DCLogic {
+  state = { lang: null, rows: null };
+  componentDidMount() { this.loadSheet(); this.loadHours(); this.loadPhotos(); this.loadEvents(); this.loadInfos();
+    this._ready = setTimeout(() => this.setState({ menuReady: true, actuReady: true }), 3000);
+    this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); this._rs();
+    try { const saved = localStorage.getItem('taberlo-lang'); const auto = /^fr/i.test(navigator.language || 'fr') ? 'fr' : 'en'; if (!this.state.lang && !this.props.langue) this.setState({ lang: saved || auto }); else if (saved) this.setState({ lang: saved }); } catch (e) {}
+    this._sc = () => { const y = window.scrollY; const st = y > 700; if (st !== this.state.showTop) this.setState({ showTop: st });
+      const dy = y - (this._ly || 0); if (Math.abs(dy) > 8) { const hid = dy > 0 && y > 200; if (hid !== !!this.state.barHidden) this.setState({ barHidden: hid }); this._ly = y; }
+      let cur = null; for (const id of ['carte', 'agenda', 'horaires', 'photos']) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < window.innerHeight * 0.4) cur = id; }
+      if (cur !== this.state.sec) this.setState({ sec: cur }); };
+    window.addEventListener('scroll', this._sc, { passive: true }); this._sc(); this._reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!this._reduce) this._hero = setInterval(() => { if (!document.hidden) this.setState(s => ({ heroIdx: (s.heroIdx || 0) + 1 })); }, 5000);
+    this._key = (e) => { if (e.key === 'Escape') { if (this.state.lightbox) this.setState({ lightbox: null }); if (this.state.menuOpen) this.setState({ menuOpen: false }); } }; window.addEventListener('keydown', this._key); }
+  floatRef = React.createRef();
+  isMobile() { return (this.state.vw || 1200) < 820; }
+  enterItem(k, src) { if (!src || this.isMobile() || this._reduce) return; this.setState({ act: k, hover: true }); }
+  leaveItem = () => { if (this.state.hover) this.setState({ hover: false }); };
+  tapItem(src, alt) { if (src && (this.isMobile() || this._reduce)) this.setState({ lightbox: src, lightboxAlt: alt || '' }); }
+  onMove = (e) => { this._tx = e.clientX; this._ty = e.clientY; if (this._cx == null) { this._cx = this._tx; this._cy = this._ty; } if (!this._raf) this._raf = requestAnimationFrame(this.tick); };
+  tick = () => { this._raf = null; const el = this.floatRef.current; if (!el) return;
+    this._cx += (this._tx - this._cx) * 0.18; this._cy += (this._ty - this._cy) * 0.18;
+    const W = 280, H = 350, vw = window.innerWidth, vh = window.innerHeight;
+    let x = this._cx + 28; if (x + W > vw - 16) x = this._cx - W - 28; let y = Math.min(Math.max(this._cy - H / 2, 16), vh - H - 16);
+    el.style.transform = `translate(${x}px,${y}px)`;
+    if (Math.abs(this._tx - this._cx) > 0.5 || Math.abs(this._ty - this._cy) > 0.5) this._raf = requestAnimationFrame(this.tick); };
+  componentWillUnmount() { clearInterval(this._hero); cancelAnimationFrame(this._raf); window.removeEventListener('scroll', this._sc); window.removeEventListener('keydown', this._key); clearTimeout(this._ready); window.removeEventListener('resize', this._rs); }
+  async loadInfos() {
+    const id = this.sheetBase(); if (!id) return;
+    try {
+      const txt = await (await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=Infos&t=${Date.now()}`)).text();
+      const [head, row] = this.parseCsv(txt); if (!head) return;
+      const keys = head.map(k => k.trim().toLowerCase()); if (!keys.includes('note')) return;
+      const o = Object.fromEntries(keys.map((k, i) => [k, ((row || [])[i] || '').trim()]));
+      this.setState({ gInfo: { note: o.note, nb: o.nb_avis } });
+    } catch (e) { console.warn('Infos : feuille illisible', e); }
+  }
+  async loadEvents() {
+    const id = this.sheetBase(); if (!id) return;
+    try {
+      const txt = await (await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent('Actu')}&t=${Date.now()}`)).text();
+      const [head, ...body] = this.parseCsv(txt);
+      const keys = head.map(k => k.trim().toLowerCase());
+      if (!keys.includes('nom_fr')) return;
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const all = body.map(r => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])))
+        .filter(r => r.nom_fr && !/^(non|no|0)$/i.test(r.visible || ''))
+        .map(r => ({ ...r, type: (r.type || (r.date ? 'soiree' : 'annonce')).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') }));
+      this.setState({ infos: all.filter(r => !r.type.startsWith('soir')) });
+      const ev = all.filter(r => r.type.startsWith('soir') && r.date)
+        .map(r => { let d = null, m;
+          if ((m = r.date.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) d = new Date(+m[1], m[2] - 1, +m[3]);
+          else if ((m = r.date.match(/^(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?/))) { let y = m[3] ? +m[3] : today.getFullYear(); if (y < 100) y += 2000; d = new Date(y, m[2] - 1, +m[1]); }
+          return d ? { ...r, d } : null; })
+        .filter(r => r && r.d >= today).sort((a, b) => a.d - b.d);
+      this.setState({ events: ev, actuReady: true });
+    } catch (e) { console.warn('Soirées : feuille illisible', e); this.setState({ actuReady: true }); }
+  }
+  imgUrl(p, w) { if (p.path) { const u = '/' + p.path.replace(/^\/+/, ''); return (this.props.netlifyImages ?? true) ? `/.netlify/images?url=${encodeURIComponent(u)}&w=${w}&q=78` : u; } return `https://lh3.googleusercontent.com/d/${p.id}=w${w}`; }
+  async loadPhotos() {
+    const repo = ((this.props.githubRepo || '').trim() || 'Taberlo07150/taberlo-site');
+    if (repo) {
+      try {
+        const br = (this.props.githubBranch || 'main').trim();
+        const res = await fetch(`https://api.github.com/repos/${repo}/contents/photos?ref=${br}`);
+        if (res.ok) { const list = (await res.json()).filter(f => f.type === 'file' && /\.(jpe?g|png|webp|avif)$/i.test(f.name))
+            .map(f => ({ name: f.name, path: f.path })).sort((a, b) => a.name.localeCompare(b.name, 'fr', { numeric: true }));
+          if (list.length) { this.setState({ photos: list }); try { localStorage.setItem('taberlo-photos', JSON.stringify(list)); } catch (e) {} return; } }
+      } catch (e) { console.warn('Photos GitHub illisibles, bascule sur le Drive', e); }
+    }
+    try { const c = JSON.parse(localStorage.getItem('taberlo-photos') || 'null'); if (Array.isArray(c) && c.length) this.setState({ photos: c }); } catch (e) {}
+    const url = ((this.props.galerieScriptUrl || '').trim() || 'https://script.google.com/macros/s/AKfycbzIo_jWvyoLNt-c1DN3iQ-OGszu63_5SJ6TLcxhteUcFtCu7bbkYB4L63WIDrDiPAIw/exec');
+    try {
+      const list = await (await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now())).json();
+      if (Array.isArray(list) && list.length) { this.setState({ photos: list }); try { localStorage.setItem('taberlo-photos', JSON.stringify(list)); } catch (e) {} }
+    } catch (e) { console.warn('Galerie : dossier illisible', e); }
+  }
+  sheetBase() {
+    const u = (this.props.carteCsvUrl ?? 'https://docs.google.com/spreadsheets/d/1FCrxJmjcq-tj54sQdkdpfosJl3rjJK85ya4Nks0zOG8/edit').trim();
+    const m = u.match(/spreadsheets\/d\/([\w-]+)/); return m ? m[1] : null;
+  }
+  parseCsv(s) { const out = []; let row = [], f = '', q = false;
+    for (let i = 0; i < s.length; i++) { const c = s[i];
+      if (q) { if (c === '"' && s[i+1] === '"') { f += '"'; i++; } else if (c === '"') q = false; else f += c; }
+      else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && s[i+1] === '\n') i++; row.push(f); out.push(row); row = []; f = ''; }
+      else f += c; }
+    if (f || row.length) { row.push(f); out.push(row); } return out; }
+  async loadHours() {
+    const id = this.sheetBase(); if (!id) return;
+    try {
+      const txt = await (await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=Horaires&t=${Date.now()}`)).text();
+      const [head, ...body] = this.parseCsv(txt);
+      const keys = head.map(k => k.trim().toLowerCase());
+      if (!keys.includes('jour')) return;
+      const rows = body.map(r => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])));
+      const toMin = (t) => { const m = (t || '').toLowerCase().match(/(\d{1,2})\s*[h:]\s*(\d{0,2})/); return m ? (+m[1]) * 60 + (+(m[2] || 0)) : null; };
+      const names = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+      const hours = names.map(n => { const r = rows.find(x => x.jour.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').startsWith(n.slice(0,3))); const o = r ? toMin(r.ouverture) : null; return { open: o, close: o == null ? null : toMin(r.fermeture) }; });
+      const noteRow = rows.find(x => x.note || x.note_fr);
+      this.setState({ hours, hoursNote: noteRow ? { fr: noteRow.note_fr || noteRow.note, en: noteRow.note_en || noteRow.note_fr || noteRow.note } : null });
+    } catch (e) { console.warn('Horaires : feuille illisible', e); }
+  }
+  componentDidUpdate(p) { if (p.carteCsvUrl !== this.props.carteCsvUrl) this.loadSheet(); }
+  async loadSheet() {
+    let url = (this.props.carteCsvUrl ?? 'https://docs.google.com/spreadsheets/d/1FCrxJmjcq-tj54sQdkdpfosJl3rjJK85ya4Nks0zOG8/edit').trim();
+    const m = url.match(/spreadsheets\/d\/([\w-]+)\/(edit|view)/);
+    if (m) url = `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv`;
+    if (!url) return this.setState({ rows: null });
+    try {
+      const txt = await (await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now())).text();
+      const parse = (s) => { const out = []; let row = [], f = '', q = false;
+        for (let i = 0; i < s.length; i++) { const c = s[i];
+          if (q) { if (c === '"' && s[i+1] === '"') { f += '"'; i++; } else if (c === '"') q = false; else f += c; }
+          else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; }
+          else if (c === '\n' || c === '\r') { if (c === '\r' && s[i+1] === '\n') i++; row.push(f); out.push(row); row = []; f = ''; }
+          else f += c; }
+        if (f || row.length) { row.push(f); out.push(row); } return out; };
+      const [head, ...body] = parse(txt);
+      const keys = head.map(k => k.trim().toLowerCase());
+      const rows = body.filter(r => r.some(c => c.trim())).map(r => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])))
+        .filter(r => !/^(non|no|0)$/i.test(r.visible || ''));
+      this.setState({ rows, menuReady: true });
+    } catch (e) { console.warn('Carte : feuille illisible', e); this.setState({ rows: null, menuFailed: true, menuReady: true }); }
+  }
+  renderVals() {
+    const lang = this.state.lang || this.props.langue || 'fr';
+    const fr = lang === 'fr', en = !fr;
+    if (typeof document !== 'undefined' && document.documentElement.lang !== lang) document.documentElement.lang = lang;
+    const navOf = (id) => ({ c: this.state.sec === id ? '#A9442E' : '#2B2118', b: this.state.sec === id ? '#C8624A' : 'transparent' });
+    const H = this.state.hours || [null,null,{open:960,close:null},{open:960,close:null},{open:960,close:null},{open:960,close:null},{open:960,close:null}].map(x => x || {open:null,close:null});
+    const DF = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'], DE = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    const SF = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], SE = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const dn = (i) => fr ? DF[i] : DE[i], sn = (i) => fr ? SF[i] : SE[i];
+    const ft = (m) => { const hh = Math.floor(m / 60) % 24, mm = m % 60; if (fr) return hh + 'h' + (mm ? String(mm).padStart(2,'0') : ''); const h12 = hh % 12 || 12; return h12 + (mm ? ':' + String(mm).padStart(2,'0') : '') + '\u00a0' + (hh < 12 ? 'am' : 'pm'); };
+    const groups = []; let cur = null;
+    H.forEach((x, i) => { if (x.open == null) { cur = null; return; }
+      if (cur && cur.open === x.open && cur.close === x.close && cur.to === i - 1) cur.to = i; else groups.push(cur = { from: i, to: i, open: x.open, close: x.close }); });
+    const closedIdx = H.map((x, i) => x.open == null ? i : -1).filter(i => i >= 0);
+    const openGroups = groups.map(g => { const isRange = g.to > g.from; const time = g.close != null ? ft(g.open) + '\u2009–\u2009' + ft(g.close) : ft(g.open);
+      return { isRange, isSingle: !isRange, pre: isRange ? (fr ? 'du' : 'from') : '', a: dn(g.from), mid: isRange ? (g.to - g.from === 1 ? (fr ? 'et' : '&') : (fr ? 'au' : 'to')) : '', b: isRange ? dn(g.to) : '',
+        hasPrefix: g.close == null, prefix: fr ? 'dès' : 'from', time, size: g.close != null ? 'clamp(56px,8vw,112px)' : 'clamp(80px,13vw,168px)' }; });
+    const closedParts = closedIdx.map((i, k) => ({ day: dn(i), sep: k === 0 ? '' : (k === closedIdx.length - 1 ? (fr ? ' et ' : ' & ') : ', ') }));
+    const footerHours = groups.map(g => ({ days: sn(g.from) + (g.to > g.from ? ' – ' + sn(g.to) : ''), time: (g.close != null ? ft(g.open) + '–' + ft(g.close) : (fr ? 'dès ' : 'from ') + ft(g.open)), color: '#F5EFE3' }));
+    if (closedIdx.length) footerHours.push({ days: closedIdx.map(sn).join(' & '), time: fr ? 'fermé' : 'closed', color: '#B9B2A6' });
+    const now = new Date(), di = (now.getDay() + 6) % 7, nm = now.getHours() * 60 + now.getMinutes();
+    const prev = H[(di + 6) % 7], t = H[di];
+    const inPrevNight = prev.open != null && prev.close != null && prev.close < prev.open && nm < prev.close;
+    let statusText, statusDot;
+    if (inPrevNight || (t.open != null && nm >= t.open && (t.close == null || t.close < t.open || nm < t.close))) { const cl = inPrevNight ? prev.close : t.close; statusText = (fr ? 'Ouvert maintenant' : 'Open now') + (cl != null ? (fr ? ' · jusqu’à ' : ' · until ') + ft(cl) : ''); statusDot = '#5E8C4A'; }
+    else if (t.open != null && nm < t.open) { statusText = (fr ? "Ouvert aujourd'hui dès " : 'Open today from ') + ft(t.open); statusDot = '#C4A25E'; }
+    else { let k = 1; while (k < 8 && H[(di + k) % 7].open == null) k++; const nd = (di + k) % 7;
+      statusText = k >= 8 ? (fr ? 'Fermé' : 'Closed') : (t.open != null ? (fr ? 'Fermé pour ce soir · ' : 'Closed for tonight · ') : (fr ? "Fermé aujourd'hui · " : 'Closed today · ')) + (k >= 8 ? '' : (k === 1 ? (fr ? 'on rouvre demain' : 'back tomorrow') : (fr ? 'on rouvre ' + DF[nd] : 'back on ' + DE[nd])) + ' ' + (fr ? 'dès ' : 'from ') + ft(H[nd].open));
+      statusDot = '#C8624A'; }
+    statusText = statusText.toUpperCase().replace(/(\d)H(\d*)/g, '$1h$2').replace(/(\d)(\s|\u00a0)?(AM|PM)/g, (m, d, s, ap) => d + (s || '') + ap.toLowerCase());
+    const hn = this.state.hoursNote;
+    const item = (n) => ({ name: fr ? `[Nom ${n}]` : `[Item ${n}]`, desc: fr ? '[Description courte]' : '[Short description]', price: '[0 €]' });
+    const isPh = (s) => !s || /^\s*\[.*\]\s*$/.test(s);
+    const fmtP = (p) => { if (isPh(p)) return ''; const m = String(p).match(/^\s*(\d+(?:[.,]\d{1,2})?)\s*€?\s*$/); return m ? m[1].replace('.', ',') + '\u00a0€' : p; };
+    let menu = null;
+    if (this.state.rows && this.state.rows.length) {
+      const cats = [];
+      for (const r of this.state.rows) {
+        const title = (fr ? r.categorie_fr : r.categorie_en || r.categorie_fr) || '';
+        let c = cats.find(x => x.title === title);
+        if (!c) cats.push(c = { title, rub: (r.rubrique || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') || (/biere|vin|boisson|cocktail|soft|cafe|apero|drink|beer|wine|sirop|jus/i.test((r.categorie_fr || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')) ? 'boissons' : 'tapas'), items: [] });
+        const nm = fr ? (isPh(r.nom_fr) ? '' : r.nom_fr) : (!isPh(r.nom_en) ? r.nom_en : (isPh(r.nom_fr) ? '' : r.nom_fr));
+        if (!nm) continue;
+        const ds = fr ? r.description_fr : (!isPh(r.description_en) ? r.description_en : r.description_fr);
+        c.items.push({ name: nm, desc: isPh(ds) ? '' : ds, price: fmtP(r.prix) });
+      }
+      menu = cats.filter(c => c.items.length);
+    }
+    const menuState = menu ? 'ok' : (this.state.menuFailed ? 'fail' : 'loading');
+    if (!menu) menu = [];
+    const tab = this.state.tab || 'tapas';
+    const menuTab = menu.filter(c => (c.rub && c.rub.startsWith('boi') ? 'boissons' : 'tapas') === tab);
+    const events = [
+      { day: fr ? 'VEN' : 'FRI', time: '[21h]', date: '09.10', name: fr ? 'Blind test & karaoké' : 'Blind test & karaoke' },
+      { day: fr ? 'SAM' : 'SAT', time: '[21h]', date: '24.10', name: fr ? '[Nom de la soirée]' : '[Event name]' },
+      { day: fr ? 'SAM' : 'SAT', time: '[21h]', date: '31.10', name: fr ? '[Nom de la soirée]' : '[Event name]' },
+    ];
+    return {
+      fr, en, menu, menuTab, events,
+      menuOp: this.state.menuReady ? 1 : 0, menuY: this.state.menuReady ? '0' : '12px', actuOp: this.state.actuReady ? 1 : 0, actuY: this.state.actuReady ? '0' : '12px',
+      mapLive: !!this.state.mapLive, mapStatic: !this.state.mapLive, loadMap: () => this.setState({ mapLive: true }), mapCta: fr ? 'Afficher le plan' : 'Show map', menuFail: menuState === 'fail' || (menuState === 'ok' && !menu.length), menuEmptyTab: menuState === 'ok' && menu.length > 0 && menuTab.length === 0,
+      gNote: ((this.state.gInfo && this.state.gInfo.note) || '4,9').replace('.', fr ? ',' : '.').replace(',', fr ? ',' : '.'),
+      hasNbAvis: !!(this.state.gInfo && this.state.gInfo.nb), gNbAvis: this.state.gInfo && this.state.gInfo.nb ? '· ' + this.state.gInfo.nb + (fr ? ' avis' : ' reviews') : '',
+      navCarte: navOf('carte'), navAgenda: navOf('agenda'), navHoraires: navOf('horaires'), navPhotos: navOf('photos'),
+      topOp: this.state.showTop && (this.state.vw || 1200) >= 820 ? 1 : 0, topPe: this.state.showTop && (this.state.vw || 1200) >= 820 ? 'auto' : 'none', barY: this.state.barHidden ? 'calc(100% + 24px)' : '0', topY: this.state.showTop ? '0' : '12px',
+      topRight: (this.state.vw || 1200) < 820 ? '16px' : '24px', topBottom: (this.state.vw || 1200) < 820 ? '92px' : '24px',
+      ...(() => { const vw = this.state.vw || 1200, mobile = vw < 820; const tel = ((this.props.telephone || '').trim() || '07 43 54 18 82');
+        const EF = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'], EE = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+        const drv = (u) => { if (!u) return ''; if (!/^https?:/i.test(u) && /\.(jpe?g|png|webp|avif)$/i.test(u)) return this.imgUrl({ path: 'affiches/' + u.replace(/^\/?(affiches\/)?/, '') }, 1100); const m = u.match(/(?:\/d\/|id=|\/file\/d\/)([\w-]{20,})/); return m ? `https://lh3.googleusercontent.com/d/${m[1]}=w1100` : u; };
+        const evs = (this.state.events || []).slice(0, this.props.nbSoirees ?? 3); const infos = this.state.infos || [];
+        const newsRows = infos.filter(r => !r.type.startsWith('hor')), banRows = this.state.bannerClosed ? [] : infos.filter(r => r.type.startsWith('hor'));
+        const act = this.state.act || (evs.length ? 'e0' : (newsRows.findIndex(r => r.visuel) >= 0 ? 'n' + newsRows.findIndex(r => r.visuel) : 'e0'));
+        const ak = act[0] === 'e' ? +act.slice(1) : -1;
+        const up = evs.map((e, i) => { const src = drv(e.visuel || e.image || ''); return { src, showThumb: mobile && !!src, cursor: src ? 'pointer' : 'default', enter: () => this.enterItem('e' + i, src), tap: () => this.tapItem(src, e.nom_fr), bg: this.state.hover && i === ak && !mobile ? 'rgba(43,33,24,.06)' : 'transparent', day: (fr ? EF : EE)[e.d.getDay()], date: String(e.d.getDate()).padStart(2, '0') + '.' + String(e.d.getMonth() + 1).padStart(2, '0'), time: e.heure || '', name: fr ? e.nom_fr : (e.nom_en || e.nom_fr), info: fr ? (e.info_fr || '') : (e.info_en || e.info_fr || ''), hasInfo: !!(fr ? e.info_fr : (e.info_en || e.info_fr)) }; });
+        const tagOf = (t) => t.startsWith('nouv') ? (fr ? 'Nouveau' : 'New') : t.startsWith('plat') ? (fr ? 'Plat du jour' : 'Dish of the day') : (fr ? 'Info' : 'Info');
+        const news = newsRows.map((n, i) => { const k = 'n' + i, on = act === k && this.state.hover, src = drv(n.visuel || ''), hv = !!src; const tx = fr ? n.info_fr : (n.info_en || n.info_fr);
+          return { title: fr ? n.nom_fr : (n.nom_en || n.nom_fr), text: tx || '', hasText: !!tx, tag: (n.etiquette || tagOf(n.type)), tagBg: n.type.startsWith('nouv') || n.type.startsWith('plat') ? '#C8624A' : '#6B5E50',
+            bg: on && hv && !mobile ? 'rgba(43,33,24,.06)' : 'transparent', cursor: hv ? 'pointer' : 'default', src, showThumb: mobile && hv, enter: () => this.enterItem(k, src), tap: () => this.tapItem(src, n.nom_fr) }; });
+        const banners = banRows.map(b => { const tx = fr ? b.info_fr : (b.info_en || b.info_fr); return { title: fr ? b.nom_fr : (b.nom_en || b.nom_fr), text: tx || '', hasText: !!tx }; });
+        const vis = [...evs.map((e, i) => ({ k: 'e' + i, src: drv(e.visuel || e.image || ''), alt: e.nom_fr })), ...newsRows.map((n, i) => ({ k: 'n' + i, src: drv(n.visuel || ''), alt: n.nom_fr }))]
+          .filter(v => v.src).map(v => ({ ...v, op: v.k === act ? 1 : 0, sc: v.k === act ? 1 : 1.04 }));
+        const fh = footerHours[0];
+        return { mobile, desktop: !mobile, menuOpen: mobile && !!this.state.menuOpen,
+          toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })), closeMenu: () => this.setState({ menuOpen: false }),
+          burgerBg: this.state.menuOpen ? '#2B2118' : 'transparent', burgerColor: this.state.menuOpen ? '#F5EFE3' : '#2B2118',
+          fbMinH: mobile ? '480px' : '560px', hasTel: !!tel, telHref: tel ? 'tel:' + tel.replace(/[^\d+]/g, '') : '#contact', telLabel: tel || '[06 00 00 00 00]',
+          news, hasNews: news.length > 0, floatRef: this.floatRef, onMove: this.onMove, leaveItem: this.leaveItem,
+          floatOp: !mobile && this.state.hover && vis.some(v => v.k === act) ? 1 : 0, floatScale: !mobile && this.state.hover ? 1 : 0.92,
+          lightboxAlt: this.state.lightboxAlt || '', skipLabel: fr ? 'Aller au contenu' : 'Skip to content', tabTapas: tab === 'tapas', tabBoissons: tab === 'boissons',
+      hasLightbox: !!this.state.lightbox, lightboxSrc: this.state.lightbox || '', closeLightbox: (e) => { e && e.stopPropagation && e.stopPropagation(); this.setState({ lightbox: null }); }, banners, hasBanner: banners.length > 0, closeBanner: () => this.setState({ bannerClosed: true }),
+          showHoverHint: !mobile && !this._reduce && vis.length > 0, showTapHint: (mobile || this._reduce) && vis.length > 0,
+          upcoming: up, hasEvents: up.length > 0, visuals: vis, hasVisuals: vis.length > 0, noVisuals: vis.length === 0, hintDisplay: mobile ? 'none' : 'inline', activeLabel: up[ak] ? up[ak].day + ' ' + up[ak].date : (act[0] === 'n' && news[+act.slice(1)] ? news[+act.slice(1)].title : ''), noEvents: up.length === 0 && news.length === 0,
+          heroInfo: [fh ? { label: fh.days.toUpperCase() + ' ' + fh.time.replace(/^dès/, 'DÈS').replace(/^from/, 'FROM') } : null, { label: fr ? 'TERRASSE' : 'TERRACE' }, { label: fr ? "BIÈRES D'ARDÈCHE" : 'LOCAL CRAFT BEER' }, { label: 'SALAVAS' }].filter(Boolean) }; })(),
+      showTapas: () => this.setState({ tab: 'tapas' }), showBoissons: () => this.setState({ tab: 'boissons' }),
+      tapasColor: tab === 'tapas' ? '#2B2118' : '#6B5E50', tapasLine: tab === 'tapas' ? '#C8624A' : 'transparent',
+      boissonsColor: tab === 'boissons' ? '#2B2118' : '#6B5E50', boissonsLine: tab === 'boissons' ? '#C8624A' : 'transparent', statusText, statusDot, openGroups, closedParts, hasClosed: closedParts.length > 0, closedWord: fr ? 'fermé' : 'closed', footerHours,
+      hasPhotos: !!(this.state.photos && this.state.photos.length), noPhotos: !(this.state.photos && this.state.photos.length),
+      photos: (this.state.photos || []).slice(0, this.props.galerieMax ?? 12).map(p => ({ src: this.imgUrl(p, (this.state.vw || 1200) < 820 ? 500 : 600), full: this.imgUrl(p, 2000), alt: (p.name || '').replace(/\.[^.]+$/, '').replace(/^\d+[-_ ]*/, '').replace(/_v\d+$/i, '').replace(/[-_]/g, ' ') })),
+      heroSlides: (() => { const ps = (this.state.photos || []).slice(0, this.props.heroNb ?? 5); const n = ps.length; const k = n ? (this.state.heroIdx || 0) % n : 0;
+        const pose = [['rotate(-2deg)', 4, 1], ['translate(6%,-3%) rotate(5deg)', 3, 1], ['translate(-7%,3%) rotate(-7deg)', 2, 1]];
+        return ps.map((p, i) => { const rel = (i - k + n) % n; const leaving = rel === n - 1 && n > 3;
+          const [tf, z, op] = pose[rel] || (leaving ? ['translate(-30%,8%) rotate(-14deg)', 5, 0] : ['translate(-7%,3%) rotate(-7deg) scale(.96)', 1, 0]);
+          return { src: this.imgUrl(p, (this.state.vw || 1200) < 820 ? 700 : 900), prio: i === k ? 'high' : 'low', lz: i === k ? 'eager' : 'lazy', alt: (p.name || '').replace(/\.[^.]+$/, '').replace(/^\d+[-_ ]*/, '').replace(/_v\d+$/i, '').replace(/[-_]/g, ' '), tf, z, op }; }); })(),
+      hasNote: !!(hn && (fr ? hn.fr : hn.en)), note: hn ? (fr ? hn.fr : hn.en) : '',
+      showStatus: this.props.badgeOuvert ?? true,
+      setFr: () => { try { localStorage.setItem('taberlo-lang', 'fr'); } catch (e) {} this.setState({ lang: 'fr' }); },
+      setEn: () => { try { localStorage.setItem('taberlo-lang', 'en'); } catch (e) {} this.setState({ lang: 'en' }); },
+      frBg: fr ? '#2B2118' : 'transparent', frColor: fr ? '#F5EFE3' : '#2B2118',
+      enBg: en ? '#2B2118' : 'transparent', enColor: en ? '#F5EFE3' : '#2B2118',
+    };
+  }
+}
+</script>
+</body>
+</html>
