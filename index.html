@@ -62,7 +62,7 @@ a:hover{color:var(--ink,#2B2118)}
 </div>
 </sc-if>
 <a href="#carte" style="position:absolute;left:12px;top:-60px;z-index:100;background:var(--btn,#2B2118);color:var(--btnText,#F5EFE3);padding:12px 18px;border-radius:999px;font:800 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase" style-focus="top:12px">{{ skipLabel }}</a>
-<er ref="{{ hdrRef }}" style="position:sticky;top:0;z-index:40;background:var(--hdr,rgba(245,239,227,.92));backdrop-filter:blur(8px);border-bottom:1px solid rgba(var(--line,43,33,24),.08)">
+<header ref="{{ hdrRef }}" style="position:sticky;top:0;z-index:40;background:var(--hdr,rgba(245,239,227,.92));backdrop-filter:blur(8px);border-bottom:1px solid rgba(var(--line,43,33,24),.08)">
 <div style="background:#2B2118;color:#F5EFE3;max-height:{{ infoMax }};overflow:hidden;transition:max-height .3s ease">
 <div style="max-width:1240px;margin:0 auto;padding:9px clamp(20px,5vw,72px);display:flex;align-items:center;gap:8px 22px;flex-wrap:{{ barWrap }};font:700 13px Manrope,sans-serif;letter-spacing:.1em">
 <sc-if value="{{ showStatus }}" hint-placeholder-val="{{ true }}"><a href="#horaires" style="display:flex;align-items:center;gap:9px;padding:6px 0;margin:-6px 0;flex:{{ statusFlex }};white-space:{{ statusWs }};color:#F5EFE3" style-hover="color:#C4A25E"><span style="width:8px;height:8px;border-radius:50%;background:{{ statusDot }};box-shadow:0 0 0 3px rgba(245,239,227,.12)"></span>{{ statusText }}</a></sc-if>
@@ -102,7 +102,7 @@ a:hover{color:var(--ink,#2B2118)}
 <a href="#photos" onClick="{{ closeMenu }}" style="padding:16px 0;border-bottom:1px solid rgba(var(--line,43,33,24),.1);font:400 28px var(--title,'Young Serif'),serif;color:var(--ink,#2B2118)">Photos</a>
 </nav>
 </sc-if>
-</er>
+</header>
 
 <section id="accueil" data-screen-label="Accueil" style="max-width:1240px;margin:0 auto;padding:clamp(24px,4vw,56px) clamp(20px,5vw,72px) clamp(48px,6vw,80px);display:grid;grid-template-columns:{{ heroCols }};gap:clamp(28px,5vw,72px);align-items:center">
 <div style="display:flex;flex-direction:column;gap:24px">
@@ -531,8 +531,8 @@ class Component extends DCLogic {
     const id = this.sheetBase(); if (!id) return;
     try {
       const txt = await (await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=Infos&t=${Date.now()}`)).text();
-      const [, row] = this.parseCsv(txt); if (!) return;
-      const keys = .map(k => k.trim().toLowerCase()); if (!keys.includes('note')) return;
+      const [head, row] = this.parseCsv(txt); if (!head) return;
+      const keys = head.map(k => k.trim().toLowerCase()); if (!keys.includes('note')) return;
       const o = Object.fromEntries(keys.map((k, i) => [k, ((row || [])[i] || '').trim()]));
       this.setState({ gInfo: { note: o.note, nb: o.nb_avis } });
     } catch (e) { console.warn('Infos : feuille illisible', e); }
@@ -541,8 +541,8 @@ class Component extends DCLogic {
     const id = this.sheetBase(); if (!id) return;
     try {
       const txt = await (await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent('Actu')}&t=${Date.now()}`)).text();
-      const [, ...body] = this.parseCsv(txt);
-      const keys = .map(k => k.trim().toLowerCase());
+      const [head, ...body] = this.parseCsv(txt);
+      const keys = head.map(k => k.trim().toLowerCase());
       if (!keys.includes('nom_fr')) return;
       const today = new Date(); today.setHours(0, 0, 0, 0);
       const all = body.map(r => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])))
@@ -595,8 +595,8 @@ class Component extends DCLogic {
     const id = this.sheetBase(); if (!id) return;
     try {
       const txt = await (await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=Horaires&t=${Date.now()}`)).text();
-      const [, ...body] = this.parseCsv(txt);
-      const keys = .map(k => k.trim().toLowerCase());
+      const [head, ...body] = this.parseCsv(txt);
+      const keys = head.map(k => k.trim().toLowerCase());
       if (!keys.includes('jour')) return;
       const rows = body.map(r => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])));
       const toMin = (t) => { const m = (t || '').toLowerCase().match(/(\d{1,2})\s*[h:]\s*(\d{0,2})/); return m ? (+m[1]) * 60 + (+(m[2] || 0)) : null; };
@@ -631,8 +631,8 @@ class Component extends DCLogic {
           else if (c === '\n' || c === '\r') { if (c === '\r' && s[i+1] === '\n') i++; row.push(f); out.push(row); row = []; f = ''; }
           else f += c; }
         if (f || row.length) { row.push(f); out.push(row); } return out; };
-      const [, ...body] = parse(txt);
-      const keys = .map(k => k.trim().toLowerCase());
+      const [head, ...body] = parse(txt);
+      const keys = head.map(k => k.trim().toLowerCase());
       const rows = body.filter(r => r.some(c => c.trim())).map(r => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])))
         .filter(r => !/^(non|no|0)$/i.test(r.visible || ''));
       this.setState({ rows, menuReady: true });
