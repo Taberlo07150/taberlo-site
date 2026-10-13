@@ -31,6 +31,9 @@
 <meta property="og:locale:alternate" content="en_GB">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BarOrPub","name":"Le Taberlo","url":"https://taberlo.com/","image":"https://taberlo.com/photos/galerie/01-facade_v3.jpg","logo":"https://taberlo.com/assets/logo-taberlo.png","hasMenu":"https://taberlo.com/#la-carte","acceptsReservations":false,"areaServed":["Salavas","Vallon-Pont-d'Arc","Gorges de l'Ardèche"],"description":"Bar à tapas, bières artisanales d'Ardèche et soirées","servesCuisine":"Tapas","telephone":"+33743541882","email":"contact@taberlo.com","priceRange":"€","address":{"@type":"PostalAddress","streetAddress":"185 rue du Ruisseau Saint-Julien","postalCode":"07150","addressLocality":"Salavas","addressRegion":"Ardèche","addressCountry":"FR"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"16:00"}],"sameAs":["https://www.facebook.com/profile.php?id=61572951150910","https://www.instagram.com/taberlo.bar/","https://whatsapp.com/channel/0029Vb9CxfhBfxoCmS93Os17"]}</script>
 <style>
+@keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){[data-mq]{animation-duration:240s!important}}
 @font-face{font-family:'Young Serif';src:url('assets/fonts/young-serif-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Manrope';src:url('assets/fonts/manrope-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Manrope';src:url('assets/fonts/manrope-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
@@ -110,7 +113,6 @@ a:hover{color:var(--ink,#2B2118)}
 <a href="#horaires" style="display:flex;align-items:center;gap:12px;align-self:flex-start;max-width:100%;padding:12px 20px 12px 16px;border-radius:999px;background:{{ heroStBg }};border:1px solid {{ heroStBd }};color:{{ heroStCol }};font:700 16px/1.3 Manrope,sans-serif" style-hover="border-color:var(--accent,#A9442E)">
 <span style="flex:none;width:10px;height:10px;border-radius:50%;background:{{ heroStDot }}"></span>
 <span style="text-wrap:pretty">{{ statusText }}</span>
-<sc-if value="{{ hasUntil }}" hint-placeholder-val="{{ false }}"><span style="font:italic 400 17px Fraunces,serif;opacity:.85;white-space:nowrap">· {{ untilOpen }}</span></sc-if>
 </a>
 <p style="margin:0;max-width:30em;font:400 clamp(17px,1.5vw,19px)/1.6 Manrope,sans-serif;color:var(--ink,#2B2118);text-wrap:pretty">
 <sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Ici on partage : tapas, planches et bières artisanales d'Ardèche. Terrasse tranquille en journée, ambiance le soir.</sc-if>
@@ -227,7 +229,7 @@ a:hover{color:var(--ink,#2B2118)}
 <span style="font:400 clamp(22px,2.4vw,28px)/1.15 'Young Serif',serif;font-synthesis:none;letter-spacing:-.01em;color:var(--accent,#A9442E);text-wrap:balance">{{ ev.name }}</span>
 <sc-if value="{{ ev.hasInfo }}" hint-placeholder-val="{{ false }}"><span style="font:400 14px/1.4 Manrope,sans-serif;color:var(--mute,#6B5E50)">{{ ev.info }}</span></sc-if>
 </div>
-<sc-if value="{{ ev.showThumb }}" hint-placeholder-val="{{ false }}"><img src="{{ ev.src }}" loading="lazy" alt="" style="display:block;width:56px;height:70px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px -6px rgba(43,33,24,.5)"></sc-if>
+<sc-if value="{{ ev.showThumb }}" hint-placeholder-val="{{ false }}"><img src="{{ ev.thumb }}" loading="lazy" decoding="async" alt="" style="display:block;width:56px;height:70px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px -6px rgba(43,33,24,.5)"></sc-if>
 </div>
 </sc-for>
 </div>
@@ -245,7 +247,7 @@ a:hover{color:var(--ink,#2B2118)}
 <sc-if value="{{ n.hasText }}" hint-placeholder-val="{{ false }}"><span style="font:400 15px/1.5 Manrope,sans-serif;color:var(--mute,#6B5E50);text-wrap:pretty">{{ n.text }}</span></sc-if>
 </div>
 <sc-if value="{{ n.isDish }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font:800 13px Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--accent,#A9442E);white-space:nowrap">{{ seeMenuLabel }} →</span></sc-if>
-<sc-if value="{{ n.showThumb }}" hint-placeholder-val="{{ false }}"><img src="{{ n.src }}" loading="lazy" alt="" style="display:block;flex:none;width:56px;height:70px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px -6px rgba(43,33,24,.5)"></sc-if>
+<sc-if value="{{ n.showThumb }}" hint-placeholder-val="{{ false }}"><img src="{{ n.thumb }}" loading="lazy" decoding="async" alt="" style="display:block;flex:none;width:56px;height:70px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px -6px rgba(43,33,24,.5)"></sc-if>
 </div>
 </sc-for>
 </div>
@@ -340,30 +342,23 @@ a:hover{color:var(--ink,#2B2118)}
 </div>
 </section>
 
-<section id="photos" data-screen-label="Photos" style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(72px,10vw,128px);scroll-margin-top:90px">
-<div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,44px)">
-<div style="display:flex;flex-direction:column;gap:14px"><div style="display:flex;align-items:center;gap:12px;font:800 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute,#6B5E50)"><span style="width:28px;height:2px;background:#C8624A"></span><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Ambiance</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">The vibe</sc-if></div>
-<h2 style="margin:0;font:400 clamp(40px,5vw,64px)/1.02 var(--title,'Young Serif'),serif;letter-spacing:-.015em;color:var(--ink,#2B2118)"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">En images</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">In pictures</sc-if></h2></div>
+<section id="photos" data-screen-label="Photos" style="background:#2B2118;padding:clamp(64px,9vw,112px) 0;margin-bottom:clamp(72px,10vw,128px);scroll-margin-top:90px">
+<div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px);display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,44px)">
+<div style="display:flex;flex-direction:column;gap:14px"><div style="display:flex;align-items:center;gap:12px;font:800 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#CBBFAE"><span style="width:28px;height:2px;background:#C8624A"></span><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">Ambiance</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">The vibe</sc-if></div>
+<h2 style="margin:0;font:400 clamp(40px,5vw,64px)/1.02 var(--title,'Young Serif'),serif;letter-spacing:-.015em;color:#F5EFE3"><sc-if value="{{ fr }}" hint-placeholder-val="{{ true }}">En images</sc-if><sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">In pictures</sc-if></h2></div>
+<a href="https://www.instagram.com/taberlo.bar/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:44px;font:800 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#E8A48F;text-decoration:none" style-hover="color:#F5EFE3">Instagram →</a>
 </div>
 <sc-if value="{{ hasPhotos }}" hint-placeholder-val="{{ false }}">
-<div ref="{{ stripRef }}" onScroll="{{ stripScroll }}" style="display:flex;gap:clamp(12px,1.6vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 calc(-1 * clamp(20px,5vw,72px));padding:4px clamp(20px,5vw,72px) 8px;scroll-padding:0 clamp(20px,5vw,72px)">
-<sc-for list="{{ photos }}" as="p" hint-placeholder-count="0">
-<a aria-label="{{ p.label }}" href="{{ p.full }}" target="_blank" rel="noopener" style="position:relative;flex:0 0 clamp(230px,27vw,340px);aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--sand,#E2D3B8);scroll-snap-align:start;display:block">
-<img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.05)">
-</a>
-</sc-for>
+<div style="display:flex;flex-direction:column;gap:clamp(10px,1.2vw,14px);overflow:hidden">
+<div data-mq="1" onMouseEnter="{{ mqPause }}" onMouseLeave="{{ mqPlay }}" style="display:flex;gap:clamp(10px,1.2vw,14px);width:max-content;animation:mqL 140s linear infinite;animation-play-state:{{ mqState }}">
+<sc-for list="{{ mqA }}" as="p" hint-placeholder-count="0"><button type="button" onClick="{{ p.open }}" aria-label="{{ p.label }}" tabindex="{{ p.tab }}" style="flex:none;height:clamp(180px,24vw,300px);border:0;padding:0;border-radius:clamp(10px,1.2vw,14px);overflow:hidden;background:#3A2E24;cursor:zoom-in"><img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" decoding="async" style="height:100%;width:auto;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.04)"></button></sc-for>
 </div>
-<div style="display:flex;align-items:center;gap:20px;margin-top:18px">
-<div style="flex:1;height:2px;background:rgba(var(--line,43,33,24),.12);border-radius:2px;overflow:hidden"><div style="height:100%;width:{{ stripW }};margin-left:{{ stripX }};background:var(--accent,#A9442E);border-radius:2px;transition:margin-left .15s linear"></div></div>
-<div style="display:flex;align-items:center;gap:20px">
-<a href="https://www.instagram.com/taberlo.bar/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:44px;font:800 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase">Instagram →</a>
-<sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:10px">
-<button type="button" onClick="{{ stripPrev }}" aria-label="Photos précédentes" style="width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ink,#2B2118);background:transparent;color:var(--ink,#2B2118);cursor:pointer;display:flex;align-items:center;justify-content:center;font:400 18px/1 Manrope,sans-serif;transition:background .2s,color .2s" style-hover="background:var(--btn,#2B2118);color:var(--btnText,#F5EFE3)">←</button>
-<button type="button" onClick="{{ stripNext }}" aria-label="Photos suivantes" style="width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ink,#2B2118);background:transparent;color:var(--ink,#2B2118);cursor:pointer;display:flex;align-items:center;justify-content:center;font:400 18px/1 Manrope,sans-serif;transition:background .2s,color .2s" style-hover="background:var(--btn,#2B2118);color:var(--btnText,#F5EFE3)">→</button>
-</div></sc-if>
+<div data-mq="1" onMouseEnter="{{ mqPause }}" onMouseLeave="{{ mqPlay }}" style="display:flex;gap:clamp(10px,1.2vw,14px);width:max-content;animation:mqR 160s linear infinite;animation-play-state:{{ mqState }}">
+<sc-for list="{{ mqB }}" as="p" hint-placeholder-count="0"><button type="button" onClick="{{ p.open }}" aria-label="{{ p.label }}" tabindex="{{ p.tab }}" style="flex:none;height:clamp(130px,17vw,220px);border:0;padding:0;border-radius:clamp(10px,1.2vw,14px);overflow:hidden;background:#3A2E24;cursor:zoom-in"><img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" decoding="async" style="height:100%;width:auto;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.04)"></button></sc-for>
 </div>
 </div>
 </sc-if>
+<div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px)">
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:16px">
 <sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ true }}">
 <div style="aspect-ratio:4/5"><image-slot id="photo-1" radius="6" placeholder="Photo : façade / terrasse"></image-slot></div>
@@ -374,6 +369,14 @@ a:hover{color:var(--ink,#2B2118)}
 <div style="aspect-ratio:4/5"><image-slot id="photo-6" radius="6" placeholder="Photo : détail, verre au blason"></image-slot></div>
 </sc-if>
 </div>
+
+</div>
+<sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" onClick="{{ lbClose }}" style="position:fixed;inset:0;z-index:200;background:rgba(20,14,9,.94);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);cursor:zoom-out">
+<sc-for list="{{ lbList }}" as="l" hint-placeholder-count="0"><img src="{{ l.src }}" alt="{{ l.alt }}" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;border-radius:10px;object-fit:contain;display:block"></sc-for>
+<button type="button" onClick="{{ lbClose }}" aria-label="Fermer" style="position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(245,239,227,.14);color:#F5EFE3;font:400 22px/1 Manrope,sans-serif;cursor:pointer">✕</button>
+</div>
+</sc-if>
 </section>
 
 <section data-screen-label="Le lieu" style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(72px,10vw,128px)">
@@ -477,7 +480,7 @@ a:hover{color:var(--ink,#2B2118)}
 <h3 style="font:400 19px/1.3 var(--title,'Young Serif'),serif;color:var(--ink,#2B2118);margin:28px 0 8px">Éditeur du site</h3>
 <p style="margin:0;font:400 15px/1.65 Manrope,sans-serif;color:var(--ink,#2B2118)">SARL Taberlo<br>185 rue du Ruisseau Saint-Julien, 07150 Salavas<br>SIREN 944 869 684<br>Contact : <a href="mailto:contact@taberlo.com" style="color:var(--accent,#A9442E)">contact@taberlo.com</a> · <a href="{{ telHref }}" style="color:var(--accent,#A9442E)">{{ telLabel }}</a></p>
 <h3 style="font:400 19px/1.3 var(--title,'Young Serif'),serif;color:var(--ink,#2B2118);margin:28px 0 8px">Hébergement</h3>
-<p style="margin:0;font:400 15px/1.65 Manrope,sans-serif;color:var(--ink,#2B2118)">Netlify, Inc.<br>512 2nd Street, Floor 2, San Francisco, CA 94107, États-Unis<br><a href="https://www.netlify.com" target="_blank" rel="noopener" style="color:var(--accent,#A9442E)">www.netlify.com</a></p>
+<p style="margin:0;font:400 15px/1.65 Manrope,sans-serif;color:var(--ink,#2B2118)">GitHub Pages – GitHub, Inc.<br>88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis<br><a href="https://pages.github.com" target="_blank" rel="noopener" style="color:var(--accent,#A9442E)">pages.github.com</a></p>
 <h3 style="font:400 19px/1.3 var(--title,'Young Serif'),serif;color:var(--ink,#2B2118);margin:28px 0 8px">Propriété intellectuelle</h3>
 <p style="margin:0;font:400 15px/1.65 Manrope,sans-serif;color:var(--ink,#2B2118)">Les textes, photos, logos et affiches de ce site appartiennent à la SARL Taberlo ou sont utilisés avec l'accord de leurs auteurs. Toute reproduction sans autorisation est interdite.</p>
 <h3 style="font:400 19px/1.3 var(--title,'Young Serif'),serif;color:var(--ink,#2B2118);margin:28px 0 8px">Données personnelles et cookies</h3>
@@ -555,7 +558,7 @@ class Component extends DCLogic {
       this.setState({ events: ev, actuReady: true });
     } catch (e) { console.warn('Soirées : feuille illisible', e); this.setState({ actuReady: true }); }
   }
-  imgUrl(p, w) { if (p.path) { const rel = p.path.replace(/^\/+/, ''); const u = /netlify\.app$|taberlo\.com$/.test(location.hostname) ? '/' + rel : 'https://raw.githubusercontent.com/' + (((this.props.githubRepo || '').trim()) || 'Taberlo07150/taberlo-site') + '/main/' + rel; const onNetlify = /netlify\.app$|taberlo\.com$/.test(location.hostname); return ((this.props.netlifyImages ?? true) && onNetlify) ? `/.netlify/images?url=${encodeURIComponent(u)}&w=${w}&q=78` : u; } return `https://lh3.googleusercontent.com/d/${p.id}=w${w}`; }
+  imgUrl(p, w) { if (p.path) { const rel = p.path.replace(/^\/+/, ''); const own = /taberlo\.com$|github\.io$/.test(location.hostname); return own ? '/' + encodeURI(rel) : 'https://raw.githubusercontent.com/' + (((this.props.githubRepo || '').trim()) || 'Taberlo07150/taberlo-site') + '/' + ((this.props.githubBranch || 'main').trim()) + '/' + encodeURI(rel); } return `https://lh3.googleusercontent.com/d/${p.id}=w${w}`; }
   async loadPhotos() {
     const repo = ((this.props.githubRepo || '').trim() || 'Taberlo07150/taberlo-site');
     try { const hc = JSON.parse(localStorage.getItem('taberlo-photos-accueil') || 'null'); if (Array.isArray(hc) && hc.length) this.setState({ heroPhotos: hc }); } catch (e) {}
@@ -718,17 +721,17 @@ class Component extends DCLogic {
       topRight: (this.state.vw || 1200) < 820 ? '16px' : '24px', topBottom: (this.state.vw || 1200) < 820 ? '92px' : '24px',
       ...(() => { const vw = this.state.vw || 1200, mobile = vw < 820; const tel = ((this.props.telephone || '').trim() || '07 43 54 18 82');
         const EF = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'], EE = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-        const drv = (u) => { if (!u) return ''; if (!/^https?:/i.test(u) && /\.(jpe?g|png|webp|avif)$/i.test(u)) return this.imgUrl({ path: 'affiches/' + u.replace(/^\/?(affiches\/)?/, '') }, 1100); const m = u.match(/(?:\/d\/|id=|\/file\/d\/)([\w-]{20,})/); return m ? `https://lh3.googleusercontent.com/d/${m[1]}=w1100` : u; };
+        const drv = (u, w = 700) => { if (!u) return ''; if (!/^https?:/i.test(u) && /\.(jpe?g|png|webp|avif)$/i.test(u)) return this.imgUrl({ path: 'affiches/' + u.replace(/^\/?(affiches\/)?/, '') }, w); const m = u.match(/(?:\/d\/|id=|\/file\/d\/)([\w-]{20,})/); return m ? `https://lh3.googleusercontent.com/d/${m[1]}=w${w}` : u; };
         const nk = (o) => { const r = { ...o }; ['nom_fr','nom_en','info_fr','info_en','etiquette'].forEach(f => { if (typeof r[f] === 'string') r[f] = r[f].normalize('NFKC'); }); return r; };
         const evs = (this.state.events || []).slice(0, this.props.nbSoirees ?? 3).map(nk); const infos = (this.state.infos || []).map(nk);
         const newsRows = infos.filter(r => !r.type.startsWith('hor')), banRows = this.state.bannerClosed ? [] : infos.filter(r => r.type.startsWith('hor'));
         const act = this.state.act || (evs.length ? 'e0' : (newsRows.findIndex(r => r.visuel) >= 0 ? 'n' + newsRows.findIndex(r => r.visuel) : 'e0'));
         const ak = act[0] === 'e' ? +act.slice(1) : -1;
-        const up = evs.map((e, i) => { const src = drv(e.visuel || e.image || ''); return { src, showThumb: !!src, cursor: src ? 'pointer' : 'default', enter: () => this.enterItem('e' + i, src), tap: () => this.tapItem(src, e.nom_fr), bg: this.state.hover && i === ak && !mobile ? 'rgba(var(--line,43,33,24),.06)' : 'transparent', day: (fr ? EF : EE)[e.d.getDay()], date: String(e.d.getDate()).padStart(2, '0') + '.' + String(e.d.getMonth() + 1).padStart(2, '0'), time: e.heure || '', name: fr ? e.nom_fr : (e.nom_en || e.nom_fr), info: fr ? (e.info_fr || '') : (e.info_en || e.info_fr || ''), hasInfo: !!(fr ? e.info_fr : (e.info_en || e.info_fr)) }; });
+        const up = evs.map((e, i) => { const src = drv(e.visuel || e.image || ''); return { src, thumb: drv(e.visuel || e.image || '', 160), showThumb: !!src, cursor: src ? 'pointer' : 'default', enter: () => this.enterItem('e' + i, src), tap: () => this.tapItem(src, e.nom_fr), bg: this.state.hover && i === ak && !mobile ? 'rgba(var(--line,43,33,24),.06)' : 'transparent', day: (fr ? EF : EE)[e.d.getDay()], date: String(e.d.getDate()).padStart(2, '0') + '.' + String(e.d.getMonth() + 1).padStart(2, '0'), time: e.heure || '', name: fr ? e.nom_fr : (e.nom_en || e.nom_fr), info: fr ? (e.info_fr || '') : (e.info_en || e.info_fr || ''), hasInfo: !!(fr ? e.info_fr : (e.info_en || e.info_fr)) }; });
         const tagOf = (t) => t.startsWith('nouv') ? (fr ? 'Nouveau' : 'New') : t.startsWith('plat') ? (fr ? 'Plat du jour' : 'Dish of the day') : (fr ? 'Info' : 'Info');
-        const news = newsRows.map((n, i) => { const k = 'n' + i, on = act === k && this.state.hover, src = drv(n.visuel || ''), dish = !src && (n.type.startsWith('nouv') || n.type.startsWith('plat')), hv = !!src || dish; const tx = fr ? n.info_fr : (n.info_en || n.info_fr);
+        const news = newsRows.map((n, i) => { const k = 'n' + i, on = act === k && this.state.hover, src = drv(n.visuel || ''), thumb = drv(n.visuel || '', 160), dish = !src && (n.type.startsWith('nouv') || n.type.startsWith('plat')), hv = !!src || dish; const tx = fr ? n.info_fr : (n.info_en || n.info_fr);
           return { title: fr ? n.nom_fr : (n.nom_en || n.nom_fr), text: tx || '', hasText: !!tx, tag: (n.etiquette || tagOf(n.type)), tagBg: n.type.startsWith('nouv') || n.type.startsWith('plat') ? '#C8624A' : 'var(--mute,#6B5E50)',
-            bg: on && hv && !mobile ? 'rgba(var(--line,43,33,24),.06)' : 'transparent', cursor: hv ? 'pointer' : 'default', src, showThumb: !!src, isDish: dish, enter: () => this.enterItem(k, src), tap: dish ? () => { this.setState({ tab: 'tapas' }); const el = document.getElementById('carte'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - (this.state.hdrH || 80), behavior: 'smooth' }); } : () => this.tapItem(src, n.nom_fr) }; });
+            bg: on && hv && !mobile ? 'rgba(var(--line,43,33,24),.06)' : 'transparent', cursor: hv ? 'pointer' : 'default', src, thumb, showThumb: !!src, isDish: dish, enter: () => this.enterItem(k, src), tap: dish ? () => { this.setState({ tab: 'tapas' }); const el = document.getElementById('carte'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - (this.state.hdrH || 80), behavior: 'smooth' }); } : () => this.tapItem(src, n.nom_fr) }; });
         const banners = banRows.map(b => { const tx = fr ? b.info_fr : (b.info_en || b.info_fr); return { title: fr ? b.nom_fr : (b.nom_en || b.nom_fr), text: tx || '', hasText: !!tx }; });
         const vis = [...evs.map((e, i) => ({ k: 'e' + i, src: drv(e.visuel || e.image || ''), alt: e.nom_fr })), ...newsRows.map((n, i) => ({ k: 'n' + i, src: drv(n.visuel || ''), alt: n.nom_fr }))]
           .filter(v => v.src).map(v => ({ ...v, op: v.k === act ? 1 : 0, sc: v.k === act ? 1 : 1.04 }));
@@ -771,6 +774,13 @@ class Component extends DCLogic {
       statusFlex: (this.state.vw || 1200) >= 820 ? 'none' : '0 1 auto', statusWs: (this.state.vw || 1200) >= 820 ? 'nowrap' : 'normal',
       barWrap: (this.state.vw || 1200) >= 820 ? 'nowrap' : 'wrap', infoMax: this.state.compact || this.state.infoGone ? '0px' : '120px', hdrPad: this.state.compact ? '8px' : '14px', logoH: this.state.compact ? '36px' : '50px', compactInfo: !!this.state.compact && (this.state.vw || 1200) >= 820,
       hdrRef: this._hdr, chipsTop: (this.state.hdrH || 110) + 'px',
+      ...(() => { const ph = (this.state.photos || []).slice(0, this.props.galerieMax ?? 12); const mob = (this.state.vw || 1200) < 820;
+        const mk = (p, i, dup) => { const src = this.imgUrl(p, mob ? 500 : 700), alt = (p.name || '').replace(/\.[^.]+$/, '').replace(/^\d+[-_ ]*/, '').replace(/_v\d+$/i, '').replace(/[-_]/g, ' ');
+          return { src, alt, label: (fr ? 'Agrandir la photo ' : 'Enlarge photo ') + (i + 1), tab: dup ? -1 : 0, open: () => this.setState({ lb: { src: this.imgUrl(p, 2000), alt } }) }; };
+        const half = Math.ceil(ph.length / 2), A = ph.slice(0, half).map((p, i) => [p, i]), B = (ph.length > 1 ? ph.slice(half) : ph).map((p, i) => [p, i + half]);
+        const loop = arr => { let base = arr; while (base.length && base.length < 12) base = base.concat(arr); return [...base.map(([p, i], k) => mk(p, i, k >= arr.length)), ...base.map(([p, i]) => mk(p, i, true))]; };
+        return { mqA: loop(A), mqB: loop(B), mqState: this.state.mqPaused || this.state.lb ? 'paused' : 'running', mqPause: () => this.setState({ mqPaused: true }), mqPlay: () => this.setState({ mqPaused: false }),
+          lbOpen: !!this.state.lb, lbList: this.state.lb ? [this.state.lb] : [], lbClose: (e) => { e && e.stopPropagation && e.stopPropagation(); this.setState({ lb: null }); } }; })(),
       stripRef: this._strip, stripPrev: () => this.stripBy(-1), stripNext: () => this.stripBy(1),
       stripScroll: (e) => { const el = e.currentTarget; const r = el.scrollWidth > el.clientWidth ? el.clientWidth / el.scrollWidth : 1; const p = el.scrollWidth - el.clientWidth > 0 ? el.scrollLeft / (el.scrollWidth - el.clientWidth) : 0; this.setState({ stripR: r, stripP: p }); },
       stripW: Math.round((this.state.stripR ?? .35) * 100) + '%', stripX: Math.round((this.state.stripP || 0) * (1 - (this.state.stripR ?? .35)) * 100) + '%',
