@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preload" href="/photos/accueil/01-facade_v3.jpg" as="image" fetchpriority="high">
 <script src="./support.js"></script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="5539ac53-99d5-46b0-8513-cd9ef24f9847"></script>
 </head>
@@ -140,7 +142,7 @@ a:hover{color:var(--ink,#2B2118)}
 <sc-if value="{{ heroFade }}" hint-placeholder-val="{{ false }}">
 <div style="position:absolute;inset:0;border-radius:{{ heroRadius }};overflow:hidden;transition:border-radius .6s ease;-webkit-mask-image:{{ heroMask }};mask-image:{{ heroMask }};-webkit-mask-composite:source-in;mask-composite:intersect;background:var(--sand,#E9DFCC);box-shadow:0 30px 60px -30px rgba(43,33,24,.5)">
 <sc-for list="{{ heroSlides }}" as="s" hint-placeholder-count="0">
-<img src="{{ s.src }}" loading="lazy" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
+<img src="{{ s.src }}" loading="eager" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
 </sc-for>
 <div style="position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(to top,rgba(43,33,24,.55),rgba(43,33,24,0));pointer-events:none"></div>
 <div style="position:absolute;left:48px;right:48px;bottom:34px;display:flex;gap:6px">
@@ -153,20 +155,20 @@ a:hover{color:var(--ink,#2B2118)}
 <sc-if value="{{ heroMosaic }}" hint-placeholder-val="{{ false }}">
 <div style="position:absolute;inset:0;display:grid;grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr;gap:12px">
 <div style="grid-row:span 2;position:relative;overflow:hidden;border-radius:200px 200px 16px 16px;background:var(--sand,#E9DFCC)"><sc-for list="{{ heroT0 }}" as="s" hint-placeholder-count="0">
-<img src="{{ s.src }}" loading="lazy" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
+<img src="{{ s.src }}" loading="eager" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
 </sc-for></div>
 <div style="position:relative;overflow:hidden;border-radius:16px;background:var(--sand,#E9DFCC)"><sc-for list="{{ heroT1 }}" as="s" hint-placeholder-count="0">
-<img src="{{ s.src }}" loading="lazy" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
+<img src="{{ s.src }}" loading="eager" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
 </sc-for></div>
 <div style="position:relative;overflow:hidden;border-radius:16px 16px 120px 16px;background:var(--sand,#E9DFCC)"><sc-for list="{{ heroT2 }}" as="s" hint-placeholder-count="0">
-<img src="{{ s.src }}" loading="lazy" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
+<img src="{{ s.src }}" loading="eager" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block;opacity:{{ s.op }};transform:{{ s.tf }};transition:opacity var(--fade,1.2s) ease, transform var(--zoom,7s) cubic-bezier(.2,.6,.2,1)">
 </sc-for></div>
 </div>
 </sc-if>
 <sc-if value="{{ heroPrints }}" hint-placeholder-val="{{ false }}">
 <sc-for list="{{ heroPrintSlides }}" as="s" hint-placeholder-count="0">
 <div style="position:absolute;top:6%;left:10%;width:80%;height:82%;padding:10px 10px 10px;background:var(--card,#FBF8F2);border-radius:6px;box-shadow:0 24px 50px -20px rgba(43,33,24,.45), 0 2px 6px rgba(43,33,24,.12);box-sizing:border-box;z-index:{{ s.z }};opacity:{{ s.op }};transform:{{ s.tf }};transition:transform .9s cubic-bezier(.2,.7,.2,1), opacity .9s ease">
-<img src="{{ s.src }}" loading="lazy" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:3px">
+<img src="{{ s.src }}" loading="eager" fetchpriority="{{ s.prio }}" decoding="async" alt="{{ s.alt }}" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:3px">
 </div>
 </sc-for>
 </sc-if>
@@ -332,7 +334,7 @@ a:hover{color:var(--ink,#2B2118)}
 <sc-if value="{{ mapLive }}" hint-placeholder-val="{{ false }}"><iframe title="Plan" src="https://maps.google.com/maps?q=185%20rue%20du%20Ruisseau%20Saint-Julien%2007150%20Salavas&amp;z=15&amp;output=embed" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(.35) sepia(.18) contrast(.95)"></iframe></sc-if>
 <sc-if value="{{ mapStatic }}" hint-placeholder-val="{{ true }}">
 <button onClick="{{ loadMap }}" aria-label="Afficher le plan interactif" style="position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:#E2D3B8;overflow:hidden">
-<img src="assets/plan-salavas.png" alt="Plan d'accès au Taberlo, Salavas" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:43% 51%;filter:sepia(.18) saturate(.9)">
+<img src="assets/plan-salavas.jpg" alt="Plan d'accès au Taberlo, Salavas" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:43% 51%;filter:sepia(.18) saturate(.9)">
 <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 18px;border-radius:999px;background:var(--chip,rgba(251,248,242,.94));font:800 13px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ink,#2B2118);white-space:nowrap;box-shadow:0 6px 18px -8px rgba(43,33,24,.4)">{{ mapCta }}</span>
 </button>
 </sc-if>
